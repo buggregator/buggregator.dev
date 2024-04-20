@@ -6,7 +6,7 @@ import GithubStars from "~/components/v1/GithubStars.vue";
   <div class="support">
     <div class="text">We need your support! <br> Please star the project on GitHub.</div>
 
-    <GithubStars/>
+    <GithubStars repository="server" size="lg"/>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import GithubStars from "~/components/v1/GithubStars.vue";
   @apply flex flex-col mt-8 justify-center items-center;
 
   .text {
-    @apply text-xs font-semibold text-center text-blue-600 relative mb-6;
+    @apply text-lg font-semibold text-center text-blue-600 relative mb-6;
   }
 }
 </style>

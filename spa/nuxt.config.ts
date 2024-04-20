@@ -1,4 +1,11 @@
 export default defineNuxtConfig({
+    runtimeConfig: {
+        public: {
+            api_url: process.env.API_URL || 'http://api.buggregator.localhost',
+            ws_url: 'ws://ws.buggregator.localhost/connection/websocket',
+            examples_url: 'http://examples.buggregator.localhost',
+        }
+    },
     app: {
         head: {
             title: "Buggregator",
@@ -15,10 +22,16 @@ export default defineNuxtConfig({
                 {rel: "icon", type: "image/png", size: "16x16", href: "/favicon/favicon-16x16.png"},
                 {rel: "icon", type: "image/png", size: "32x32", href: "/favicon/favicon-32x32.png"},
                 {rel: "apple-touch-icon", sizes: "180x180", href: "/favicon/apple-touch-icon.png"},
-                {rel: "manifest", sizes: "180x180", href: "site.webmanifest"},
+                // {rel: "manifest", sizes: "180x180", href: "assets/site.webmanifest"},
             ],
         },
     },
+
+    plugins: [
+        'app/plugins/logger.ts',
+        'app/plugins/centrifugo.ts',
+        'app/plugins/apiClient.ts',
+    ],
 
     devtools: {
         enabled: true
@@ -51,5 +64,16 @@ export default defineNuxtConfig({
         strict: true,
     },
 
-    modules: ["@pinia/nuxt"]
+    modules: [
+        "@pinia/nuxt",
+        'nuxt-anchorscroll',
+    ],
+
+    anchorscroll: {
+        hooks: [
+            // Or any valid hook if needed
+            // Default is `page:finish`
+            'page:transition:finish',
+        ],
+    },
 })

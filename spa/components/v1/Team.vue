@@ -41,7 +41,7 @@ const users = [
 
 <style scoped lang="scss">
 .users {
-  @apply flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 justify-center;
+  @apply flex flex-wrap gap-5 justify-center;
 }
 
 .user {

@@ -5,7 +5,9 @@ declare(strict_types=1);
 return [
     'default' => env('CACHE_STORAGE', 'rr'),
 
-    'aliases' => [],
+    'aliases' => [
+        'github' => 'rr',
+    ],
 
     'storages' => [
         'rr' => [

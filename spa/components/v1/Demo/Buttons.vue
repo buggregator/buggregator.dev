@@ -133,9 +133,22 @@ const buttons = [
   },
 ]
 
+const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`).slice(1);
+
 const callAction = (section: string, group: string, action: string) => {
-  const event = `${section}.${group}.${action}`;
-  console.log(`Triggered event: ${event}`);
+  const app = useNuxtApp();
+
+  let call: string;
+
+  if (group !== 'common') {
+    call = `${section}_${group}`;
+  } else {
+    call = section;
+  }
+
+  call += `:${camelToSnakeCase(action)}`;
+
+  app.$api.examples.call(call);
 }
 </script>
 

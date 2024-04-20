@@ -48,12 +48,6 @@ services:
 
       RR_CENTRIFUGE_PROXY_ADDRESS: tcp://0.0.0.0:10001
       RR_CENTRIFUGE_GRPC_API_ADDRESS: tcp://buggregator-ws:10000
-    healthcheck:
-      test: curl --fail http://127.0.0.1:2114 || exit 1
-      interval: 10s
-      timeout: 30s
-      retries: 3
-      start_period: 5s
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.buggregator-api-http.entrypoints=web"
@@ -76,8 +70,8 @@ services:
       - "traefik.http.routers.buggregator-spa-http.entrypoints=web"
       - "traefik.http.routers.buggregator-spa-http.rule=Host(`buggregator.localhost`)"
       - "traefik.http.services.buggregator-spa-http.loadbalancer.server.port=3000"
-    volumes:
-      - ./spa:/app
+#    volumes:
+#      - ./spa:/app
     networks:
       - buggregator-network
 

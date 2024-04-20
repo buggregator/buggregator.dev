@@ -4,7 +4,7 @@ import Buttons from "~/components/v1/Demo/Buttons.vue";
 </script>
 
 <template>
-  <div class="demo">
+  <div class="demo" id="demo">
     <Frame class="relative flex-1"/>
     <Buttons />
   </div>

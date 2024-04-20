@@ -15,12 +15,15 @@ http:
   address: '0.0.0.0:8000'
   middleware:
     - gzip
-    - static
-  static:
-    dir: public
-    forbid:
-      - .php
-      - .htaccess
+    - headers
+  headers:
+    cors:
+      allowed_origin: ${RR_CORS_ALLOWED_ORIGIN:-*}
+      allowed_headers: ${RR_CORS_ALLOWED_HEADERS:-*}
+      allowed_methods: ${RR_CORS_ALLOWED_METHODS:-GET,POST,PUT,DELETE}
+      allow_credentials: false
+      exposed_headers: ${RR_CORS_EXPOSED_HEADERS:-Cache-Control,Content-Language,Content-Type,Expires,Last-Modified,Pragma,Content-Disposition,X-RateLimit-Remaining,X-RateLimit-Retry-After,X-RateLimit-Limit,X-Captcha}
+      max_age: 600
   pool:
     num_workers: 4
     supervisor:

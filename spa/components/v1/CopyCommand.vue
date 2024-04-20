@@ -11,8 +11,9 @@ const copyToClipboard = () => {
 </script>
 
 <template>
-  <div class="mb-10 flex">
-    <code class="code" @click="copyToClipboard">{{ text }}</code>
+  <div class="mb-10 flex code">
+    <code class="px-3" @click="copyToClipboard">{{ text }}</code>
+    <svg viewBox="0 0 24 24" class="text-gray-300 w-5" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 8V7c0-1 0-1.4.3-1.7.3-.3.8-.3 1.7-.3h5c1 0 1.4 0 1.7.3.3.3.3.8.3 1.7v5c0 1 0 1.4-.3 1.7-.3.3-.8.3-1.7.3h-1m-9 5h5c1 0 1.4 0 1.7-.3.3-.3.3-.8.3-1.7v-5c0-1 0-1.4-.3-1.7-.3-.3-.8-.3-1.7-.3H7c-1 0-1.4 0-1.7.3-.3.3-.3.8-.3 1.7v5c0 1 0 1.4.3 1.7.3.3.8.3 1.7.3Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/></svg>
   </div>
 </template>
 

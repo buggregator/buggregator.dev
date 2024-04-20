@@ -1,6 +1,6 @@
 <template>
   <GridRow class="hero">
-    <GithubStars/>
+    <GithubStars repository="server"/>
 
     <h1 class="title">
       <span class="block mb-4 text-black">Buggregator</span>
@@ -13,7 +13,10 @@
     </p>
 
     <div class="buttons">
-      <a href="#demo" class="demo">Try demo</a>
+      <NuxtLink href="#demo" class="demo" @click="scrollToAnchor('demo')">
+        Try demo
+      </NuxtLink>
+
       <a href="https://docs.buggregator.dev" class="docs">
         Documentation
       </a>

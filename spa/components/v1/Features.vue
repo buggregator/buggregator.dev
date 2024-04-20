@@ -15,9 +15,9 @@ import SourceCode from "~/components/v1/Features/SourceCode.vue";
 
     <div class="flex flex-col gap-6">
       <SeamlessIntegration/>
-      <div class="flex gap-6">
-        <SSO class="w-1/2 bg-white"/>
-        <ExternalDatabases class="w-1/2 bg-white"/>
+      <div class="flex flex-col md:flex-row gap-6">
+        <SSO class="md:w-1/2 bg-white"/>
+        <ExternalDatabases class="md:w-1/2 bg-white"/>
       </div>
       <KubernetesReady/>
       <SourceCode/>`
