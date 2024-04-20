@@ -64,7 +64,6 @@ services:
     build:
       context: ./
       dockerfile: ./.docker/spa/Dockerfile
-    command: yarn dev
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.buggregator-spa-http.entrypoints=web"
