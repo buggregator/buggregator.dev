@@ -1,0 +1,211 @@
+version: '3.9'
+
+services:
+  buggregator-reverse-proxy:
+    image: traefik:v2.9
+    command:
+      - "--accesslog"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--providers.file.directory=/configuration/"
+      - "--providers.file.watch=true"
+    ports:
+      - ${TRAEFIC_PORT_HTTP:-80}:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-reverse-proxy.entrypoints=web"
+      - "traefik.http.routers.buggregator-reverse-proxy.rule=Host(`traefik.buggregator.localhost`)"
+      - "traefik.http.services.buggregator-reverse-proxy.loadbalancer.server.port=8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - buggregator-network
+
+  buggregator-api:
+    build:
+      context: ./
+      dockerfile: ./.docker/app/Dockerfile
+    environment:
+      APP_ENV: production
+      DEBUG: false
+      VERBOSITY_LEVEL: basic
+      MONOLOG_DEFAULT_CHANNEL: roadrunner
+      MONOLOG_DEFAULT_LEVEL: WARNING
+      QUEUE_CONNECTION: in-memory
+      CACHE_STORAGE: rr
+      CYCLE_SCHEMA_CACHE: true
+      CYCLE_SCHEMA_WARMUP: true
+      SENTRY_DSN: ${SENTRY_DSN:-http://sentry@buggregator-demo:8000/1}
+
+      DB_CONNECTION: pgsql
+      DB_DATABASE: app
+      DB_HOST: buggregator-pgsql
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
+
+      RR_CENTRIFUGE_PROXY_ADDRESS: tcp://0.0.0.0:10001
+      RR_CENTRIFUGE_GRPC_API_ADDRESS: tcp://buggregator-ws:10000
+    healthcheck:
+      test: curl --fail http://127.0.0.1:2114 || exit 1
+      interval: 10s
+      timeout: 30s
+      retries: 3
+      start_period: 5s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-api-http.entrypoints=web"
+      - "traefik.http.routers.buggregator-api-http.rule=Host(`api.buggregator.localhost`)"
+      - "traefik.http.services.buggregator-api-http.loadbalancer.server.port=8000"
+    volumes:
+      - ./app:/app
+    depends_on:
+      - buggregator-pgsql
+    networks:
+      - buggregator-network
+
+  buggregator-spa:
+    build:
+      context: ./
+      dockerfile: ./.docker/spa/Dockerfile
+    command: yarn dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-spa-http.entrypoints=web"
+      - "traefik.http.routers.buggregator-spa-http.rule=Host(`buggregator.localhost`)"
+      - "traefik.http.services.buggregator-spa-http.loadbalancer.server.port=3000"
+    volumes:
+      - ./spa:/app
+    networks:
+      - buggregator-network
+
+  buggregator-ws:
+    image: centrifugo/centrifugo:v5
+    volumes:
+      - ./.docker/centrifugo/config.json:/centrifugo/config.json
+    command: centrifugo -c config.json
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-ws-http.entrypoints=web"
+      - "traefik.http.routers.buggregator-ws-http.rule=Host(`ws.buggregator.localhost`)"
+      - "traefik.http.services.buggregator-ws-http.loadbalancer.server.port=8089"
+    depends_on:
+      - buggregator-api
+    networks:
+      - buggregator-network
+
+  buggregator-examples:
+    image: ghcr.io/buggregator/examples:latest
+    environment:
+      APP_ENV: production
+      APP_KEY: ${APP_KEY:-base64:kMvf1mHFIuCf+ZqMiId7yo6v4oKtjuWqnlxJTWsWv7k=}
+      LOG_LEVEL: debug
+      BROADCAST_DRIVER: log
+      CACHE_DRIVER: array
+      QUEUE_CONNECTION: sync
+      DB_CONNECTION: pgsql
+      DB_HOST: buggregator-pgsql
+      DB_DATABASE: examples
+      DB_USERNAME: homestead
+      DB_PASSWORD: secret
+      APP_URL: ${APP_URL:-http://examples.buggregator.localhost}
+      MAIL_HOST: buggregator-demo
+      MAIL_PORT: 1025
+      MAIL_ENCRYPTION: null
+      MAIL_FROM_ADDRESS: sender@site.com
+      MAIL_FROM_NAME: sender
+      RAY_HOST: ray@buggregator-demo
+      RAY_PORT: 8000
+      VAR_DUMPER_SERVER: buggregator-demo:9912
+      SENTRY_LARAVEL_DSN: http://sentry@buggregator-demo:8000/123
+      LOG_SOCKET_URL: buggregator-demo:9913
+      LOG_SLACK_WEBHOOK_URL: http://buggregator-demo:8000/slack
+      INSPECTOR_URL: http://inspector@buggregator-demo:8000
+      INSPECTOR_API_KEY: test
+      BUGGREGATOR_URL: ${BUGGREGATOR_DEMO_URL:-http://demo.buggregator.localhost}
+      PROFILER_ENDPOINT: http://profiler@buggregator-demo:8000
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-examples-http.entrypoints=web"
+      - "traefik.http.routers.buggregator-examples-http.rule=Host(`examples.buggregator.localhost`)"
+      - "traefik.http.services.buggregator-examples-http.loadbalancer.server.port=8000"
+    depends_on:
+      - buggregator-pgsql
+    networks:
+      - buggregator-network
+
+  buggregator-demo:
+    image: ghcr.io/buggregator/server:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-demo-http.entrypoints=web"
+      - "traefik.http.routers.buggregator-demo-http.rule=Host(`demo.buggregator.localhost`)"
+      - "traefik.http.services.buggregator-demo-http.loadbalancer.server.port=8000"
+    networks:
+      - buggregator-network
+
+  buggregator-docs:
+    image: ghcr.io/buggregator/docs:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-docs-http.entrypoints=web"
+      - "traefik.http.routers.buggregator-docs-http.rule=Host(`docs.buggregator.localhost`)"
+      - "traefik.http.services.buggregator-docs-http.loadbalancer.server.port=80"
+    networks:
+      - buggregator-network
+
+  buggregator-n8n:
+    image: docker.n8n.io/n8nio/n8n
+    environment:
+      N8N_HOST: ${N8N_HOST:-wf.buggregator.localhost}
+      NODE_ENV: production
+      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://wf.buggregator.localhost}
+      GENERIC_TIMEZONE: ${N8N_GENERIC_TIMEZONE:-UTC}
+
+      DB_TYPE: postgresdb
+      DB_POSTGRESDB_DATABASE: n8n
+      DB_POSTGRESDB_HOST: buggregator-pgsql
+      DB_POSTGRESDB_PORT: 5432
+      DB_POSTGRESDB_USER: homestead
+      DB_POSTGRESDB_PASSWORD: secret
+      DB_POSTGRESDB_SCHEMA: public
+    volumes:
+      - ./.docker-data/n8n:/home/node/.n8n
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.buggregator-wf-http.entrypoints=web"
+      - "traefik.http.routers.buggregator-wf-http.rule=Host(`wf.buggregator.localhost`)"
+      - "traefik.http.services.buggregator-wf-http.loadbalancer.server.port=5678"
+    depends_on:
+      - buggregator-pgsql
+    networks:
+      - buggregator-network
+
+  buggregator-pgsql:
+    image: postgres:15
+    healthcheck:
+      test: pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER
+      interval: 2s
+      timeout: 5s
+      start_period: 2s
+    restart: always
+    volumes:
+      - type: bind
+        source: ./.docker-data/db
+        target: /var/lib/postgresql/data
+      - ./.docker/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    environment:
+      POSTGRES_USER: homestead
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: homestead
+    networks:
+      - buggregator-network
+
+networks:
+  buggregator-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.0.10.0/24
