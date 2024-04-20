@@ -13,7 +13,7 @@
     </p>
 
     <div class="buttons">
-      <NuxtLink href="#demo" class="demo" @click="scrollToAnchor('demo')">
+      <NuxtLink href="#demo" class="demo">
         Try demo
       </NuxtLink>
 
