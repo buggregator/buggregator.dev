@@ -4,6 +4,7 @@ export default defineNuxtConfig({
             api_url: process.env.API_URL || 'http://api.buggregator.localhost',
             ws_url: process.env.WS_URL || 'ws://ws.buggregator.localhost/connection/websocket',
             examples_url: process.env.EXAMPLES_URL || 'http://examples.buggregator.localhost',
+            buggregator_url: process.env.BUGGREGATOR_URL || 'http://demo.buggregator.localhost',
         }
     },
     app: {

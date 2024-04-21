@@ -1,5 +1,7 @@
 import type { AppState, WsEvent } from "~/config/types";
 
+const config = useRuntimeConfig()
+
 export const useAppStore = defineStore('appStore', {
     state: (): AppState => ({
         github: {
@@ -12,7 +14,7 @@ export const useAppStore = defineStore('appStore', {
                 last_version: ''
             }
         },
-        buggregator_link: 'http://demo.buggregator.localhost'
+        buggregator_url: config.public.buggregator_url
     }),
     actions: {
         async fetch(): Promise<void> {

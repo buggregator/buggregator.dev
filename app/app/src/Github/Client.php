@@ -15,6 +15,7 @@ final readonly class Client implements \App\Github\ClientInterface
     public function __construct(
         private \Psr\Http\Client\ClientInterface $client,
         CacheStorageProviderInterface $cache,
+        private int $ttl = 300,
     ) {
         $this->cache = $cache->storage('github');
     }
@@ -34,7 +35,7 @@ final readonly class Client implements \App\Github\ClientInterface
         );
 
         $data = \json_decode($response->getBody()->getContents(), true);
-        $this->cache->set($cacheKey, $data['stargazers_count']);
+        $this->cache->set($cacheKey, $data['stargazers_count'], $this->ttl);
 
         return $data['stargazers_count'];
     }
@@ -54,7 +55,7 @@ final readonly class Client implements \App\Github\ClientInterface
         );
 
         $data = \json_decode($response->getBody()->getContents(), true);
-        $this->cache->set($cacheKey, $data['tag_name']);
+        $this->cache->set($cacheKey, $data['tag_name'], $this->ttl);
 
         return $data['tag_name'];
     }

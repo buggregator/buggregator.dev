@@ -8,7 +8,7 @@ const app = useAppStore();
   <div>
     <div class="p-0 sticky top-0 h-screen">
       <div class="flex flex-col items-center">
-          <iframe class="frame" :src="app.buggregator_link" frameborder="0"></iframe>
+          <iframe class="frame" :src="app.buggregator_url" frameborder="0"></iframe>
       </div>
     </div>
   </div>
