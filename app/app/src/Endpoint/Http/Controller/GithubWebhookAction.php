@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Endpoint\Http\Controller;
 
+use App\Github\CacheableClient;
 use App\Github\ClientInterface;
 use App\Github\Event\NewRelease;
 use App\Github\Event\RepositoryStarred;
@@ -40,8 +41,11 @@ final readonly class GithubWebhookAction
         };
 
         if ($event !== null) {
-            $client->clearCache($input->data('repository.full_name'));
             $this->events->dispatch($event);
+        }
+
+        if ($client instanceof CacheableClient) {
+            $client->clearCache();
         }
 
         return $response->create(200);

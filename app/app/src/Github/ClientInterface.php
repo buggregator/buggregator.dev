@@ -9,6 +9,4 @@ interface ClientInterface
     public function getStars(string $repository): int;
 
     public function getLastVersion(string $repository): string;
-
-    public function clearCache(string $repository): void;
 }

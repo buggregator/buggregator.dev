@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application\Bootloader;
 
+use App\Github\CacheableClient;
 use App\Github\Client;
 use App\Github\ClientInterface;
 use App\Github\WebhookGate;
@@ -16,14 +17,19 @@ final class GithubBootloader extends Bootloader
     public function defineSingletons(): array
     {
         return [
-            ClientInterface::class => static fn(CacheStorageProviderInterface $cache) => new Client(
-                client: new \GuzzleHttp\Client([
-                    'base_uri' => 'https://api.github.com/',
-                    'headers' => [
-                        'Accept' => 'application/vnd.github.v3+json',
-                    ],
-                ]),
-                cache: $cache,
+            ClientInterface::class => static fn(
+                CacheStorageProviderInterface $cache,
+            ) => new CacheableClient(
+                client: new Client(
+                    client: new \GuzzleHttp\Client([
+                        'base_uri' => 'https://api.github.com/',
+                        'headers' => [
+                            'Accept' => 'application/vnd.github.v3+json',
+                        ],
+                    ]),
+                ),
+                cache: $cache->storage('github'),
+                ttl: 300,
             ),
 
             WebhookGate::class => static fn(
