@@ -67,11 +67,6 @@ final readonly class Client implements \App\Github\ClientInterface
 
     public function clearCache(string $repository): void
     {
-        $refl = new \ReflectionClass($this);
-        foreach ($refl->getMethods() as $method) {
-            if ($method->isPublic()) {
-                $this->cache->delete($this->getCacheKey($repository, $method->getName()));
-            }
-        }
+        $this->cache->clear();
     }
 }
