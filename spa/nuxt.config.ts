@@ -2,20 +2,20 @@ export default defineNuxtConfig({
     runtimeConfig: {
         public: {
             api_url: process.env.API_URL || 'http://api.buggregator.localhost',
-            ws_url: 'ws://ws.buggregator.localhost/connection/websocket',
-            examples_url: 'http://examples.buggregator.localhost',
+            ws_url: process.env.WS_URL || 'ws://ws.buggregator.localhost/connection/websocket',
+            examples_url: process.env.EXAMPLES_URL || 'http://examples.buggregator.localhost',
         }
     },
     app: {
         head: {
-            title: "Buggregator",
+            title: "Buggregator - The Ultimate Debugging Server for PHP",
             htmlAttrs: {
                 lang: "en",
             },
             meta: [
                 {charset: "utf-8"},
                 {name: "viewport", content: "width=device-width, initial-scale=1"},
-                {hid: "description", name: "description", content: "The Ultimate Debugging Server for PHP"},
+                {hid: "description", name: "description", content: "Buggregator is a free Swiss Army knife for developers. What makes it special is that it offers a range of features that you would usually find in various paid tools, but it's available for free."},
                 {name: "format-detection", content: "telephone=no"},
             ],
             link: [
@@ -57,7 +57,7 @@ export default defineNuxtConfig({
     },
 
     dir: {
-        static: 'static',
+        static: 'public',
     },
 
     typescript: {

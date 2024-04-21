@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from "~/stores/app";
-import AnimatedCounter from 'vue-animated-counter';
+import JSConfetti from 'js-confetti';
 
 type Props = {
   repository: number;
@@ -11,14 +11,18 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 
-
+const jsConfetti = new JSConfetti();
 const stars = computed(() => {
   const app = useAppStore();
   return app.github[props.repository].stars;
 }, {
   onTrigger(e) {
     if (e.key === 'stars') {
-      console.log('Stars updated');
+      jsConfetti.addConfetti({
+        emojis: ['🦄', '⭐', '🎉', '💖', '🚀', '😍'],
+        emojiSize: 50,
+        confettiNumber: 40,
+      });
     }
   }
 });

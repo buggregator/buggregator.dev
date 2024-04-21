@@ -28,7 +28,7 @@ final class GithubBootloader extends Bootloader
 
             WebhookGate::class => static fn(
                 EnvironmentInterface $env,
-            ) => new WebhookGate(secret: $env->get('GITHUB_WEBHOOK_SECRET', 'secret')),
+            ) => new WebhookGate(secret: $env->get('GITHUB_WEBHOOK_SECRET')),
         ];
     }
 }

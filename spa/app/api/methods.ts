@@ -1,5 +1,6 @@
 import {
     SettingsResponse,
+    TeamResponse,
     ServerResponse
 } from "~/config/types";
 import { RPCClient } from "~/app/ws/RPCClient";
@@ -7,10 +8,13 @@ import { RPCClient } from "~/app/ws/RPCClient";
 const settings = (rpc: RPCClient) => () => rpc.call('get:api/settings')
     .then((response: ServerResponse<SettingsResponse>) => response.data);
 
+const team = (rpc: RPCClient) => () => rpc.call('get:api/team')
+    .then((response: ServerResponse<TeamResponse>) => response.data.data);
+
 const callExampleAction = (host: string) => (action: string) => {
     action = action.toLowerCase();
 
-    const path: string = action === 'profiler:report' ? '_profiler' : '';
+    const path: string = action === 'profiler:report' ? 'example/call/profiler' : 'example/call';
 
     return useFetch(`${host}/${path}`, {
         method: 'POST',
@@ -23,5 +27,6 @@ const callExampleAction = (host: string) => (action: string) => {
 
 export default {
     settings,
+    team,
     callExampleAction
 }

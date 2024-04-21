@@ -10,6 +10,7 @@ use App\Github\Event\RepositoryStarred;
 use App\Github\WebhookGate;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
+use Spiral\Http\Exception\ClientException\ForbiddenException;
 use Spiral\Http\Request\InputManager;
 use Spiral\Http\ResponseWrapper;
 use Spiral\Router\Annotation\Route;
@@ -29,7 +30,7 @@ final readonly class GithubWebhookAction
         ClientInterface $client,
     ): ResponseInterface {
         if (!$gate->validate((string)$input->request()->getBody(), $input->header('x-hub-signature-256'))) {
-            // throw new ForbiddenException('Invalid signature');
+            throw new ForbiddenException('Invalid signature');
         }
 
         $event = match ($input->header('x-github-event')) {

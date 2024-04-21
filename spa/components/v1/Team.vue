@@ -1,26 +1,34 @@
 <script setup lang="ts">
 import GridRow from "~/components/v1/GridRow.vue";
+import { useTeamStore } from "~/stores/team";
 
-const users = [
-  {
-    name: 'Pavel Buchnev',
-    role: 'Creator of Buggregator',
-    avatar: 'https://avatars.githubusercontent.com/u/773481?v=4',
-    github: 'https://github.com/butschster'
-  },
-  {
-    name: 'Aleksei Gagarin',
-    role: 'PHP developer',
-    avatar: 'https://avatars.githubusercontent.com/u/4152481?v=4',
-    github: 'https://github.com/roxblnfk'
-  },
-  {
-    name: 'Andrey Kuchuk',
-    role: 'Frontend developer',
-    avatar: 'https://avatars.githubusercontent.com/u/13301570?v=4',
-    github: 'https://github.com/Kreezag'
-  },
-]
+const store = useTeamStore();
+
+await store.fetch();
+const users = computed(() => {
+  return store.team;
+});
+
+// const users = [
+//   {
+//     name: 'Pavel Buchnev',
+//     role: 'Creator of Buggregator',
+//     avatar: 'https://avatars.githubusercontent.com/u/773481?v=4',
+//     github: 'https://github.com/butschster'
+//   },
+//   {
+//     name: 'Aleksei Gagarin',
+//     role: 'PHP developer',
+//     avatar: 'https://avatars.githubusercontent.com/u/4152481?v=4',
+//     github: 'https://github.com/roxblnfk'
+//   },
+//   {
+//     name: 'Andrey Kuchuk',
+//     role: 'Frontend developer',
+//     avatar: 'https://avatars.githubusercontent.com/u/13301570?v=4',
+//     github: 'https://github.com/Kreezag'
+//   },
+// ]
 </script>
 
 <template>

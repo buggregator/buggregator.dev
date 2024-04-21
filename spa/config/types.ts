@@ -11,6 +11,17 @@ export interface SettingsResponse {
     }
 }
 
+export interface TeamMember {
+    name: string;
+    role: string;
+    avatar: string;
+    github: string;
+}
+
+export interface TeamResponse {
+    data: TeamMember[];
+}
+
 export interface ServerResponse<T> {
     data: T;
     response: {
