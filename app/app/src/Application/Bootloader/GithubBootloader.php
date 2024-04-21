@@ -19,12 +19,14 @@ final class GithubBootloader extends Bootloader
         return [
             ClientInterface::class => static fn(
                 CacheStorageProviderInterface $cache,
+                EnvironmentInterface $env,
             ) => new CacheableClient(
                 client: new Client(
                     client: new \GuzzleHttp\Client([
                         'base_uri' => 'https://api.github.com/',
                         'headers' => [
                             'Accept' => 'application/vnd.github.v3+json',
+                            'Authorization' => 'Bearer ' . $env->get('GITHUB_TOKEN'),
                         ],
                     ]),
                 ),

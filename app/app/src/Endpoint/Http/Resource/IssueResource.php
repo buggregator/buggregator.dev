@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Endpoint\Http\Resource;
 
-final class IssueResource
+use App\Application\Http\Response\JsonResource;
+
+final class IssueResource extends JsonResource
 {
 
 }

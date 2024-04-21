@@ -43,6 +43,19 @@ final readonly class CacheableClient implements ClientInterface
         return $version;
     }
 
+    public function getIssuesForContributors(): array
+    {
+        $cacheKey = $this->getCacheKey('issues', __METHOD__);
+        if ($this->cache->has($cacheKey)) {
+            return $this->cache->get($cacheKey);
+        }
+
+        $issues = $this->client->getIssuesForContributors();
+        $this->cache->set($cacheKey, $issues, $this->ttl);
+
+        return $issues;
+    }
+
     public function clearCache(): void
     {
         $this->cache->clear();

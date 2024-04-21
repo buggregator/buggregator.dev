@@ -50,6 +50,8 @@ services:
 
       VAR_DUMPER_FORMAT: server
       VAR_DUMPER_SERVER: buggregator-demo:9912
+
+      GITHUB_TOKEN: ${GITHUB_TOKEN}
     volumes:
       - ./app:/app
     depends_on:

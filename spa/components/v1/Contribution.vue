@@ -2,10 +2,10 @@
 import { useIssuesStore } from "~/stores/issues";
 import GridRow from "~/components/v1/GridRow.vue";
 
-const issues = computed(() => {
-  const store = useIssuesStore();
-  store.fetch();
+const store = useIssuesStore();
+store.fetch();
 
+const issues = computed(() => {
   return store.issues;
 });
 
