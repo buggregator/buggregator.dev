@@ -12,6 +12,7 @@ final readonly class RepositoryStarred implements ShouldBroadcastInterface
 {
     public function __construct(
         public string $repository,
+        public string $author,
         public int $stars,
     ) {
     }

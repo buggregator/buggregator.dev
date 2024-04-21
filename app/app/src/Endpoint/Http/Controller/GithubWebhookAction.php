@@ -58,6 +58,7 @@ final readonly class GithubWebhookAction
         return match ($action) {
             'created' => new RepositoryStarred(
                 repository: $input->data('repository.name'),
+                author: $input->data('sender.login'),
                 stars: $input->data('repository.stargazers_count'),
             ),
             default => null,
