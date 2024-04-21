@@ -1,7 +1,5 @@
 import type { AppState, WsEvent } from "~/config/types";
 
-const config = useRuntimeConfig()
-
 export const useAppStore = defineStore('appStore', {
     state: (): AppState => ({
         github: {
@@ -14,14 +12,16 @@ export const useAppStore = defineStore('appStore', {
                 last_version: ''
             }
         },
-        buggregator_url: config.public.buggregator_url
+        buggregator_url: ''
     }),
     actions: {
         async fetch(): Promise<void> {
             const nuxt: NuxtApp = useNuxtApp()
             const result = await nuxt.$api.settings.get()
-
             this.github = result.github
+
+            const config = useRuntimeConfig()
+            this.buggregator_url = config.public.buggregator_url
         },
 
         subscribeToUpdates(): void {
