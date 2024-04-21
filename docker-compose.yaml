@@ -48,7 +48,8 @@ services:
       RR_CENTRIFUGE_PROXY_ADDRESS: tcp://0.0.0.0:10001
       RR_CENTRIFUGE_GRPC_API_ADDRESS: tcp://buggregator-ws:10000
 
-      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET:-null}
+      VAR_DUMPER_FORMAT: server
+      VAR_DUMPER_SERVER: buggregator-demo:9912
     volumes:
       - ./app:/app
     depends_on:

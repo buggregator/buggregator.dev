@@ -11,13 +11,13 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
 });
 
-const jsConfetti = new JSConfetti();
 const stars = computed(() => {
   const app = useAppStore();
   return app.github[props.repository].stars;
 }, {
   onTrigger(e) {
     if (e.key === 'stars') {
+      const jsConfetti = new JSConfetti();
       jsConfetti.addConfetti({
         emojis: ['🦄', '⭐', '🎉', '💖', '🚀', '😍'],
         emojiSize: 50,
