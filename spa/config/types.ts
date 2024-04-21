@@ -18,8 +18,29 @@ export interface TeamMember {
     github: string;
 }
 
+export interface TeamState {
+    team: TeamMember[];
+    contributors: TeamMember[];
+}
+
 export interface TeamResponse {
     data: TeamMember[];
+}
+
+export interface Issue {
+    repository: string;
+    title: string;
+    url: string;
+    labels: string[];
+    created_at: string;
+}
+
+export interface IssuesState {
+    issues: Issue[];
+}
+
+export interface IssuesResponse {
+    data: Issue[];
 }
 
 export interface ServerResponse<T> {

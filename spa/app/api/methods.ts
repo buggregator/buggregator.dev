@@ -1,7 +1,7 @@
 import {
     SettingsResponse,
     TeamResponse,
-    ServerResponse
+    ServerResponse, IssuesResponse
 } from "~/config/types";
 import { RPCClient } from "~/app/ws/RPCClient";
 
@@ -10,6 +10,9 @@ const settings = (rpc: RPCClient) => () => rpc.call('get:api/settings')
 
 const team = (rpc: RPCClient) => () => rpc.call('get:api/team')
     .then((response: ServerResponse<TeamResponse>) => response.data.data);
+
+const issuesForContributors = (rpc: RPCClient) => () => rpc.call('get:api/issues/for-contributors')
+    .then((response: ServerResponse<IssuesResponse>) => response.data.data);
 
 const callExampleAction = (host: string) => (action: string) => {
     action = action.toLowerCase();
@@ -28,5 +31,6 @@ const callExampleAction = (host: string) => (action: string) => {
 export default {
     settings,
     team,
-    callExampleAction
+    callExampleAction,
+    issuesForContributors
 }

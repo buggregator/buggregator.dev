@@ -3,11 +3,12 @@
     <Hero/>
     <Demo/>
     <Support/>
-    <div class="flex flex-col gap-20 mb-20">
+    <div class="flex flex-col gap-20">
       <HowToRun/>
       <Features/>
       <Trap/>
       <Team/>
+      <Contribution/>
     </div>
     <PhpStorm/>
   </div>
@@ -26,4 +27,5 @@ import Features from "~/components/v1/Features.vue";
 import Trap from "~/components/v1/Trap.vue";
 import Team from "~/components/v1/Team.vue";
 import PhpStorm from "~/components/v1/PhpStorm.vue";
+import Contribution from "~/components/v1/Contribution.vue";
 </script>

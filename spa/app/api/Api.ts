@@ -1,6 +1,6 @@
 import apiMethods from '~/app/api/methods';
 import { RPCClient } from "~/app/ws/RPCClient";
-import { SettingsResponse, TeamMember } from "~/config/types";
+import { Issue, SettingsResponse, TeamMember } from "~/config/types";
 
 type SettingsApi = {
     get: () => SettingsResponse,
@@ -12,6 +12,10 @@ type ExamplesApi = {
 
 type TeamApi = {
     list: () => TeamMember[],
+}
+
+type IssueApi = {
+    list: () => Issue[],
 }
 
 export default class Api {
@@ -34,6 +38,12 @@ export default class Api {
     get team(): TeamApi {
         return {
             list: apiMethods.team(this.rpc),
+        }
+    }
+
+    get issue(): IssueApi {
+        return {
+            list: apiMethods.issuesForContributors(this.rpc),
         }
     }
 

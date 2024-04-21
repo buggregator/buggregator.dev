@@ -7,11 +7,11 @@ body {
 }
 
 .section-title {
-    @apply text-3xl lg:text-5xl leading-none font-extrabold text-blue-800 tracking-tight mb-12;
+    @apply text-3xl lg:text-5xl leading-none font-semibold text-blue-800 tracking-tight mb-12;
 }
 
 .section-body {
-    @apply font-medium mb-6 text-xl;
+    @apply mb-6 text-xl leading-8 text-gray-600;
 }
 
 a.text-link {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useAppStore } from "~/stores/app";
-import JSConfetti from 'js-confetti';
 
 type Props = {
   repository: number;
@@ -14,17 +13,6 @@ const props = withDefaults(defineProps<Props>(), {
 const stars = computed(() => {
   const app = useAppStore();
   return app.github[props.repository].stars;
-}, {
-  onTrigger(e) {
-    if (e.key === 'stars') {
-      const jsConfetti = new JSConfetti();
-      jsConfetti.addConfetti({
-        emojis: ['🦄', '⭐', '🎉', '💖', '🚀', '😍'],
-        emojiSize: 50,
-        confettiNumber: 40,
-      });
-    }
-  }
 });
 </script>
 

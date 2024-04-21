@@ -1,4 +1,5 @@
 import type { AppState, WsEvent } from "~/config/types";
+import JSConfetti from "js-confetti";
 
 export const useAppStore = defineStore('appStore', {
     state: (): AppState => ({
@@ -26,10 +27,23 @@ export const useAppStore = defineStore('appStore', {
 
         subscribeToUpdates(): void {
             const nuxt: NuxtApp = useNuxtApp()
+
+            const firework = (): void => {
+                const jsConfetti = new JSConfetti();
+                jsConfetti.addConfetti({
+                    emojis: ['🦄', '⭐', '🎉', '💖', '🚀', '😍'],
+                    emojiSize: 50,
+                    confettiNumber: 40,
+                });
+            }
+
             nuxt.$ws.channel('events').listen((data: WsEvent): void => {
                 switch (data.event) {
                     case 'repository.starred':
                         this.github[data.data.repository]['stars'] = data.data.stars
+
+                        // todo: it should be in a different place
+                        firework()
                         break
                 }
             })

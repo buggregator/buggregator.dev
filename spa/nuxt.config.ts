@@ -1,9 +1,9 @@
 export default defineNuxtConfig({
     runtimeConfig: {
         public: {
-            api_url: process.env.API_URL || 'http://api.buggregator.localhost',
-            ws_url: process.env.WS_URL || 'ws://ws.buggregator.localhost/connection/websocket',
-            examples_url: process.env.EXAMPLES_URL || 'http://examples.buggregator.localhost',
+            api_url: process.env.API_URL || 'http://buggregator.localhost',
+            ws_url: process.env.WS_URL || 'ws://buggregator.localhost/connection/websocket',
+            examples_url: process.env.EXAMPLES_URL || 'http://buggregator.localhost',
             buggregator_url: process.env.BUGGREGATOR_URL || 'http://demo.buggregator.localhost',
         }
     },
@@ -33,10 +33,6 @@ export default defineNuxtConfig({
         'app/plugins/centrifugo.ts',
         'app/plugins/apiClient.ts',
     ],
-
-    devtools: {
-        enabled: true
-    },
 
     ssr: false,
 
@@ -69,12 +65,4 @@ export default defineNuxtConfig({
         "@pinia/nuxt",
         'nuxt-anchorscroll',
     ],
-
-    anchorscroll: {
-        hooks: [
-            // Or any valid hook if needed
-            // Default is `page:finish`
-            'page:transition:finish',
-        ],
-    },
 })

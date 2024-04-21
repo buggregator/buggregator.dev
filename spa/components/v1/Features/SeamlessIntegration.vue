@@ -5,10 +5,8 @@ import Feature from "~/components/v1/Features/Feature.vue";
 <template>
   <Feature class="bg-[url('~/assets/img/bg.jpg')]">
     <div>
-      <a href="https://docs.buggregator.dev/config/sso.html" target="_blank"
-         class="text-2xl font-bold text-white">
-        Seamless Integration
-      </a>
+      <h3 class="text-2xl font-bold text-white">Seamless Integration</h3>
+
       <p class="text-gray-100 my-4 text-lg">
         Easily integrate Buggregator with the libraries you already use, like Ray and Symfony/VarDumper, without any
         additional installations. Just configure your server address, and you're ready to go. Our aim is to offer a
