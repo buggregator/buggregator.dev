@@ -20,7 +20,7 @@ import SourceCode from "~/components/v1/Features/SourceCode.vue";
         <ExternalDatabases class="md:w-1/2 bg-white"/>
       </div>
       <KubernetesReady/>
-      <SourceCode/>`
+      <SourceCode/>
     </div>
   </GridRow>
 </template>
