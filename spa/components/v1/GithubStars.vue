@@ -25,21 +25,17 @@ const currentProgress = computed(() => {
 </script>
 
 <template>
-  <div class="w-full">
-    <div class="w-56 mx-auto">
-      <a class="stars-container" :class="size" :href="`https://github.com/buggregator/${repository}`" target="_blank">
-        <div class="text">
-          <img class="logo" src="~/assets/img/github.svg" alt="GitHub Logo"/> GitHub
-        </div>
-        <span class="stars">★ {{ stars }}</span>
-      </a>
+  <a class="stars-container" :class="size" :href="`https://github.com/buggregator/${repository}`" target="_blank">
+    <div class="text">
+      <img class="logo" src="~/assets/img/github.svg" alt="GitHub Logo"/> GitHub
     </div>
+    <span class="stars">★ {{ stars }}</span>
+  </a>
 
-    <div v-if="progress" class="progress-bar">
-      <div class="progress" :style="{ width: `${currentProgress}%` }"></div>
-      <div class="required">of {{ props.required }} stars</div>
-    </div>
-  </div>
+  <!--    <div v-if="progress" class="progress-bar">-->
+  <!--      <div class="progress" :style="{ width: `${currentProgress}%` }"></div>-->
+  <!--      <div class="required">of {{ props.required }} stars</div>-->
+  <!--    </div>-->
 </template>
 
 <style scoped lang="scss">
