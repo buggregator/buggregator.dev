@@ -1,6 +1,7 @@
 <template>
   <div>
     <Hero/>
+<!--    <HowItWorks/>-->
     <Demo/>
     <Support/>
     <div class="flex flex-col gap-20">
@@ -28,4 +29,5 @@ import Trap from "~/components/v1/Trap.vue";
 import Team from "~/components/v1/Team.vue";
 import PhpStorm from "~/components/v1/PhpStorm.vue";
 import Contribution from "~/components/v1/Contribution.vue";
+import HowItWorks from "~/components/v1/HowItWorks.vue";
 </script>

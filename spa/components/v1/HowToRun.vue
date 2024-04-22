@@ -5,7 +5,7 @@ import CopyCommand from "~/components/v1/CopyCommand.vue";
 </script>
 
 <template>
-  <div class="block-wrapper">
+  <div class="block-wrapper" id="install">
     <GridRow>
       <h3 class="section-title">
         How to run?

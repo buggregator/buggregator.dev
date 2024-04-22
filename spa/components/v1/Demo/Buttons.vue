@@ -203,7 +203,7 @@ const callAction = (section: string, group: string, action: string) => {
       }
 
       > .events-buttons {
-        @apply overflow-hidden flex flex-wrap gap-2 md:gap-3 lg:gap-4 text-sm;
+        @apply overflow-hidden flex flex-wrap gap-1 md:gap-2 lg:gap-3 text-sm;
 
         .button {
           @apply border rounded-full text-blue-600 md:py-1 md:px-3 px-2 lg:px-3 border-blue-400 hover:bg-blue-500 hover:text-white transition-all duration-300;

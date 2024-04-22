@@ -4,22 +4,22 @@
 
     <h1 class="title">
       <span class="block mb-4 text-black">Buggregator</span>
-      <span><small class="text-blue-800">The Ultimate Debugging Server for PHP</small></span>
+      <span><small class="text-blue-800">The Ultimate Debugging Server</small></span>
     </h1>
 
     <p class="text">
-      Buggregator is a free Swiss Army knife for developers. What makes it special is that it offers a range
-      of features that you would usually find in various paid tools, but it's available for free.
+      It works seamlessly with the libraries you already use, like Ray, Symfony/VarDumper, Monolog, Sentry, etc. The
+      goal was to simplify the integration process and provide a centralized server to manage and display all the data
+      from your project.
     </p>
 
     <div class="buttons">
       <NuxtLink href="#demo" class="demo">
         Try demo
       </NuxtLink>
-
-      <a href="https://docs.buggregator.dev" class="docs">
-        Documentation
-      </a>
+      <NuxtLink href="#install" class="install">
+        How to run
+      </NuxtLink>
     </div>
   </GridRow>
 </template>
@@ -39,7 +39,7 @@ import GithubStars from "~/components/v1/GithubStars.vue";
 }
 
 .text {
-  @apply text-lg text-gray-500 mb-10 sm:mb-11 text-center w-2/3 xl:w-1/2;
+  @apply text-lg text-gray-500 mb-10 sm:mb-11 text-center w-2/3;
 }
 
 .buttons {
@@ -53,8 +53,12 @@ import GithubStars from "~/components/v1/GithubStars.vue";
     @apply font-semibold text-white;
   }
 
-  .docs {
-    @apply font-semibold leading-6 text-blue-800;
+  .install {
+    @apply font-semibold leading-6 text-blue-800 hover:text-blue-700 hover:bg-blue-100;
+    @apply px-6 py-3;
+    @apply rounded-md;
+    @apply transition-colors;
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
   }
 }
 </style>
