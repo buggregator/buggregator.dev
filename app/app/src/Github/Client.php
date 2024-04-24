@@ -50,6 +50,7 @@ final readonly class Client implements ClientInterface
             'buggregator/trap',
             'buggregator/frontend',
             'buggregator/docs',
+            'buggregator/phpstorm-plugin',
         ];
 
         $issues = [];

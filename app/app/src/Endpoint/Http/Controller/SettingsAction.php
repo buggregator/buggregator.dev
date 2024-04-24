@@ -24,6 +24,10 @@ final readonly class SettingsAction
                     'stars' => $client->getStars('buggregator/trap'),
                     'last_version' => $client->getLastVersion('buggregator/trap'),
                 ],
+                'phpstorm-plugin' => [
+                    'stars' => $client->getStars('buggregator/phpstorm-plugin'),
+                    'last_version' => $client->getLastVersion('buggregator/phpstorm-plugin'),
+                ],
             ],
         ]);
     }
