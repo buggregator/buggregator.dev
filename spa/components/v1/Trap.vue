@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 import GridRow from "~/components/v1/GridRow.vue";
 import CopyCommand from "~/components/v1/CopyCommand.vue";
 import GithubStars from "~/components/v1/GithubStars.vue";

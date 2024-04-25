@@ -29,7 +29,8 @@ const currentProgress = computed(() => {
     <div class="text">
       <img class="logo" src="~/assets/img/github.svg" alt="GitHub Logo"/> GitHub
     </div>
-    <span class="stars">★ {{ stars }}</span>
+    <span v-if="stars > 0" class="stars">★ {{ stars }}</span>
+    <span v-else class="no-stars">Star it now!</span>
   </a>
 
   <!--    <div v-if="progress" class="progress-bar">-->
@@ -54,7 +55,7 @@ const currentProgress = computed(() => {
   @apply bg-gray-800 text-white rounded-full flex items-center border bg-gray-800 hover:bg-blue-600 transition cursor-pointer;
 
   &.lg {
-    @apply gap-6 px-5 py-3 text-xl;
+    @apply gap-6 p-4 text-xl;
 
     .logo {
       @apply w-8 h-8;
@@ -66,7 +67,7 @@ const currentProgress = computed(() => {
   }
 
   &.md {
-    @apply gap-6 px-3 py-2;
+    @apply gap-6 p-2;
 
     .logo {
       @apply w-6 h-6;
@@ -78,7 +79,7 @@ const currentProgress = computed(() => {
   }
 
   &.sm {
-    @apply gap-4 px-2 py-1 text-sm;
+    @apply gap-4 p-1 text-sm;
 
     .logo {
       @apply w-5 h-5;
@@ -95,6 +96,10 @@ const currentProgress = computed(() => {
 
   .stars {
     @apply break-keep text-nowrap;
+  }
+
+  .no-stars {
+    @apply text-xs text-right -my-1 mr-1 text-yellow-300;
   }
 }
 </style>

@@ -28,6 +28,10 @@ export default defineNuxtConfig({
         },
     },
 
+    gtag: {
+        id: null,
+    },
+
     plugins: [
         'app/plugins/logger.ts',
         'app/plugins/centrifugo.ts',
@@ -62,6 +66,7 @@ export default defineNuxtConfig({
     },
 
     modules: [
+        'nuxt-gtag',
         "@pinia/nuxt",
         'nuxt-anchorscroll',
     ],
