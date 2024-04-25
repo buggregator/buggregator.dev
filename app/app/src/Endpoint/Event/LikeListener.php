@@ -122,11 +122,15 @@ final readonly class LikeListener
             "When %s compiles, time stops to admire.",
             "The only test %s fails is the test of time.",
             "%s doesn't need to optimize. It's already perfect.",
-            "When %s runs, CPU usage drops out of respect."
+            "When %s runs, CPU usage drops out of respect.",
         ];
 
-        $phrase = $phrases[\array_rand($phrases)];
+        $shouldPrint = \random_int(1, 10) === 1;
+        if (!$shouldPrint) {
+            return;
+        }
 
+        $phrase = $phrases[\array_rand($phrases)];
         dump(\sprintf($phrase, $event->key));
     }
 }
