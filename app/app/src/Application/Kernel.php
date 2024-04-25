@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Application;
 
+use App\Application\Bootloader\EventsBootloader;
 use App\Application\Bootloader\GithubBootloader;
 use Spiral\Boot\Bootloader\CoreBootloader;
 use Spiral\DotEnv\Bootloader\DotenvBootloader;
@@ -38,6 +39,7 @@ class Kernel extends \Spiral\Framework\Kernel
             PrototypeBootloader::class,
 
             GithubBootloader::class,
+            EventsBootloader::class,
         ];
     }
 }
