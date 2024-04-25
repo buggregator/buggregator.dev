@@ -5,10 +5,17 @@ declare(strict_types=1);
 namespace App\Endpoint\Event;
 
 use App\Application\Event\Liked;
+use Spiral\Core\Attribute\Singleton;
 use Spiral\Events\Attribute\Listener;
 
+#[Singleton]
 final readonly class LikeListener
 {
+    public function __construct(
+        private int $randomFactor = 10,
+    ) {
+    }
+
     #[Listener]
     public function __invoke(Liked $event): void
     {
@@ -125,7 +132,7 @@ final readonly class LikeListener
             "When %s runs, CPU usage drops out of respect.",
         ];
 
-        $shouldPrint = \random_int(1, 10) === 1;
+        $shouldPrint = \random_int(1, $this->randomFactor) === 1;
         if (!$shouldPrint) {
             return;
         }
