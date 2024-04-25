@@ -8,6 +8,7 @@ use App\Github\CacheableClient;
 use App\Github\Client;
 use App\Github\ClientInterface;
 use App\Github\WebhookGate;
+use Psr\Log\LoggerInterface;
 use Spiral\Boot\Bootloader\Bootloader;
 use Spiral\Boot\EnvironmentInterface;
 use Spiral\Cache\CacheStorageProviderInterface;
@@ -19,6 +20,7 @@ final class GithubBootloader extends Bootloader
         return [
             ClientInterface::class => static fn(
                 CacheStorageProviderInterface $cache,
+                LoggerInterface $logger,
                 EnvironmentInterface $env,
             ) => new CacheableClient(
                 client: new Client(
@@ -29,6 +31,7 @@ final class GithubBootloader extends Bootloader
                             'Authorization' => 'Bearer ' . $env->get('GITHUB_TOKEN'),
                         ],
                     ]),
+                    logger: $logger,
                 ),
                 cache: $cache->storage('github'),
                 ttl: 300,

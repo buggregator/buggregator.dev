@@ -14,6 +14,8 @@ const team = (rpc: RPCClient) => () => rpc.call('get:api/team')
 const issuesForContributors = (rpc: RPCClient) => () => rpc.call('get:api/issues/for-contributors')
     .then((response: ServerResponse<IssuesResponse>) => response.data.data);
 
+const like = (rpc: RPCClient) => (key: string) => rpc.call('post:api/like', {key});
+
 const callExampleAction = (host: string) => (action: string) => {
     action = action.toLowerCase();
 
@@ -32,5 +34,6 @@ export default {
     settings,
     team,
     callExampleAction,
-    issuesForContributors
+    issuesForContributors,
+    like
 }

@@ -6,6 +6,10 @@ type SettingsApi = {
     get: () => SettingsResponse,
 }
 
+type DataApi = {
+    like: () => void,
+}
+
 type ExamplesApi = {
     call: (action: string) => void,
 }
@@ -27,6 +31,12 @@ export default class Api {
         this.rpc = rpc;
         this._api_url = api_url;
         this._examples_url = examples_url;
+    }
+
+    get data(): DataApi {
+        return {
+            like: apiMethods.like(this.rpc),
+        }
     }
 
     get settings(): SettingsApi {

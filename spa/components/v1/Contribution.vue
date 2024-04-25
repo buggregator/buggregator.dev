@@ -15,7 +15,7 @@ const redirectTo = (url: string) => {
 </script>
 
 <template>
-  <div class="bg-white py-16">
+  <div class="bg-white py-16" id="contributing">
     <GridRow>
       <h3 class="section-title text-blue-800">Contributing</h3>
 

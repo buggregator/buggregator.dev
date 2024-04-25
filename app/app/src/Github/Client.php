@@ -7,11 +7,13 @@ namespace App\Github;
 use App\Github\Entity\Issue;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
+use Psr\Log\LoggerInterface;
 
 final readonly class Client implements ClientInterface
 {
     public function __construct(
         private \Psr\Http\Client\ClientInterface $client,
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -26,7 +28,7 @@ final readonly class Client implements ClientInterface
 
         $data = \json_decode($response->getBody()->getContents(), true);
 
-        return $data['stargazers_count'];
+        return $data['stargazers_count'] ?? 0;
     }
 
     public function getLastVersion(string $repository): string
@@ -40,7 +42,7 @@ final readonly class Client implements ClientInterface
 
         $data = \json_decode($response->getBody()->getContents(), true);
 
-        return $data['tag_name'];
+        return $data['tag_name'] ?? '0.0.0';
     }
 
     public function getIssuesForContributors(): array
@@ -70,6 +72,16 @@ final readonly class Client implements ClientInterface
                 uri: "repos/{$repository}/issues?labels=for%20contributors&assignee=none",
             ),
         );
+
+        if ($response->getStatusCode() !== 200) {
+            $this->logger->error('Failed to fetch issues', [
+                'repository' => $repository,
+                'status' => $response->getStatusCode(),
+                'body' => $response->getBody()->getContents(),
+            ]);
+
+            return [];
+        }
 
         $data = \json_decode($response->getBody()->getContents(), true);
 

@@ -57,7 +57,8 @@ final readonly class RPCService implements ServiceInterface
         [$method, $uri] = \explode(':', $request->method, 2);
         $method = \strtoupper($method);
 
-        $httpRequest = $this->requestFactory->createServerRequest(\strtoupper($method), \ltrim($uri, '/'))
+        $httpRequest = $this->requestFactory
+            ->createServerRequest(\strtoupper($method), \ltrim($uri, '/'))
             ->withHeader('Content-Type', 'application/json');
 
         $data = $request->getData();
