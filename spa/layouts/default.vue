@@ -3,6 +3,7 @@
     <Navbar />
     <slot />
   </div>
+  <WidgetContainerModal />
 </template>
 
 <style lang="scss" scoped>
@@ -12,5 +13,6 @@
 </style>
 
 <script setup lang="ts">
+import {container as WidgetContainerModal} from "jenesius-vue-modal";
 import Navbar from "~/layouts/_components/Navbar.vue";
 </script>

@@ -32,4 +32,5 @@ import PhpStorm from "~/components/v1/PhpStorm.vue";
 import Contribution from "~/components/v1/Contribution.vue";
 import HowItWorks from "~/components/v1/HowItWorks.vue";
 import Frameworks from "~/components/v1/Frameworks.vue";
+import IntroVideo from "~/components/v1/IntroVideo.vue";
 </script>

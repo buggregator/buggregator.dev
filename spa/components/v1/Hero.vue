@@ -14,11 +14,15 @@
     </p>
 
     <div class="buttons">
+      <button @click="openVideo" class="video">
+        <svg viewBox="0 0 28.57 20" class="w-12" xmlns="http://www.w3.org/2000/svg"><path d="M27.97 3.12A3.58 3.58 0 0 0 25.45.6C23.22 0 14.29 0 14.29 0S5.35 0 3.12.6A3.58 3.58 0 0 0 .6 3.12C0 5.35 0 10 0 10s0 4.65.6 6.88a3.58 3.58 0 0 0 2.52 2.52c2.23.6 11.17.6 11.17.6s8.93 0 11.16-.6a3.58 3.58 0 0 0 2.52-2.52c.6-2.23.6-6.88.6-6.88s0-4.65-.6-6.88Z" fill="red"/><path d="M11.43 14.29 18.85 10l-7.42-4.28v8.57Z" fill="#fff"/></svg>
+        <span>Watch video</span>
+      </button>
       <NuxtLink href="#demo" class="demo">
         Try demo
       </NuxtLink>
       <NuxtLink href="#install" class="install">
-        How to run
+        Let's install
       </NuxtLink>
     </div>
   </GridRow>
@@ -27,6 +31,14 @@
 <script setup lang="ts">
 import GridRow from "~/components/v1/GridRow.vue";
 import GithubStars from "~/components/v1/GithubStars.vue";
+import {openModal} from "jenesius-vue-modal";
+import IntroVideo from "~/components/v1/IntroVideo.vue";
+
+const openVideo = async () => {
+  await openModal(IntroVideo, {
+
+  })
+};
 </script>
 
 <style scoped lang="scss">
@@ -43,19 +55,28 @@ import GithubStars from "~/components/v1/GithubStars.vue";
 }
 
 .buttons {
-  @apply flex items-center justify-center gap-x-6 lg:justify-start mb-8;
+  @apply flex flex-col sm:flex-row items-center justify-center gap-6 lg:justify-start mb-8;
 
   .demo {
-    @apply px-6 py-3;
+    @apply px-3 py-2 md:px-6 md:py-4;
     @apply bg-blue-800 hover:bg-blue-700;
     @apply rounded-md shadow-sm;
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
     @apply font-semibold text-white;
   }
 
+  .video {
+    @apply flex items-center gap-x-4;
+    @apply pl-4 pr-6 py-3;
+    @apply bg-gray-800 hover:bg-gray-700;
+    @apply rounded-md shadow-sm;
+    @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
+    @apply font-semibold text-white;
+  }
+
   .install {
-    @apply font-semibold leading-6 text-blue-800 hover:text-blue-700 hover:bg-blue-100;
-    @apply px-6 py-3;
+    @apply font-semibold leading-6 text-blue-800 hover:text-blue-700 hover:bg-blue-100 border;
+    @apply px-3 py-2 md:px-6 md:py-4;
     @apply rounded-md;
     @apply transition-colors;
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
