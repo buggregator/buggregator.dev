@@ -23,7 +23,7 @@ a.text-link {
 }
 
 .read-more-link {
-    @apply border font-bold px-5 py-2 rounded-full;
+    @apply border font-bold px-5 py-2 rounded-full text-sm;
 
     &.gray {
         @apply bg-gray-100 hover:bg-gray-200 text-gray-800;
@@ -41,8 +41,12 @@ a.text-link {
         @apply bg-blue-100 hover:bg-blue-200 text-blue-800;
     }
 
+    &.teal {
+        @apply bg-blue-100 hover:bg-teal-200 text-teal-800;
+    }
+
     &.small {
-        @apply text-sm px-3 py-1;
+        @apply text-xs px-3 py-1;
     }
 }
 
@@ -59,5 +63,5 @@ a.text-link {
 }
 
 .feature-text {
-    @apply text-gray-400 font-semibold;
+    @apply text-gray-400 font-semibold pb-2;
 }

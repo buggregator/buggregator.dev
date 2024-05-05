@@ -5,6 +5,8 @@ import SSO from "~/components/v1/Features/SSO.vue";
 import ExternalDatabases from "~/components/v1/Features/ExternalDatabases.vue";
 import KubernetesReady from "~/components/v1/Features/KubernetesReady.vue";
 import SourceCode from "~/components/v1/Features/SourceCode.vue";
+import Webhooks from "~/components/v1/Features/Webhooks.vue";
+import Metrics from "~/components/v1/Features/Metrics.vue";
 </script>
 
 <template>
@@ -18,6 +20,10 @@ import SourceCode from "~/components/v1/Features/SourceCode.vue";
       <div class="flex flex-col md:flex-row gap-6">
         <SSO class="md:w-1/2 bg-white"/>
         <ExternalDatabases class="md:w-1/2 bg-white"/>
+      </div>
+      <div class="flex flex-col md:flex-row gap-6">
+        <Webhooks class="md:w-1/2 bg-white"/>
+        <Metrics class="md:w-1/2 bg-white"/>
       </div>
       <KubernetesReady/>
       <SourceCode/>

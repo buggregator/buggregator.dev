@@ -58,11 +58,11 @@ const openVideo = async () => {
   @apply flex flex-col sm:flex-row items-center justify-center gap-6 lg:justify-start mb-8;
 
   .demo {
-    @apply px-3 py-2 md:px-6 md:py-4;
+    @apply px-3 py-2 md:px-6 md:py-3;
     @apply bg-blue-800 hover:bg-blue-700;
     @apply rounded-md shadow-sm;
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
-    @apply font-semibold text-white;
+    @apply text-white text-sm md:text-base;
   }
 
   .video {
@@ -75,10 +75,11 @@ const openVideo = async () => {
   }
 
   .install {
-    @apply font-semibold leading-6 text-blue-800 hover:text-blue-700 hover:bg-blue-100 border;
-    @apply px-3 py-2 md:px-6 md:py-4;
+    @apply leading-6 text-blue-800 hover:text-blue-700 hover:bg-blue-100 border;
+    @apply px-3 py-2 md:px-6 md:py-3;
     @apply rounded-md;
     @apply transition-colors;
+    @apply text-sm md:text-base;
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;
   }
 }

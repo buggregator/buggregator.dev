@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { WsEvent } from "~/config/types";
+import JSConfetti from "js-confetti";
 
 type Props = {
   name: string;
@@ -8,16 +9,24 @@ const props = defineProps<Props>();
 
 const icon = () => {
   const list = [
-    'love1.svg',
-    'love2.svg',
-    'pampers.svg',
-    'poop1.svg',
-    'poop2.svg',
-    'toilet.svg',
+    '✌', '⭐', '❤️', '☢',
+    '😊', '🔥', '☀️', '💀️',
+    '⚡', '⏰', '🎈', '⛄',
+    '🎉', '🎁', '🎊', '🎃',
+    '🚀', '🍕', '🍔', '🍟',
+    '🍦', '🏆', '🏈', '🏊',
+    '🏄', '🏂', '🏇', '🚴',
   ]
 
   return list[Math.floor(Math.random() * list.length)];
 };
+
+const position = () => {
+  const min = 10;
+  const max = 80;
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 const likes = ref([]);
 
@@ -26,9 +35,22 @@ const like = () => {
   app.$api.data.like(props.name);
 };
 
+const firework = (total: number = 40): void => {
+  const jsConfetti = new JSConfetti();
+  jsConfetti.addConfetti({
+    emojis: ['🦄', '⭐', '🎉', '💖', '🚀', '😍'],
+    emojiSize: 50,
+    confettiNumber: total,
+  });
+}
+
 app.$ws.channel('events').listen((data: WsEvent): void => {
   if (data.event === 'liked' && data.data.key === props.name) {
-    likes.value.push(icon());
+    likes.value.push({ icon: icon(), position: position() });
+
+    if (likes.value.length > 10) {
+      firework(10);
+    }
 
     setTimeout(() => {
       likes.value.shift();
@@ -39,8 +61,11 @@ app.$ws.channel('events').listen((data: WsEvent): void => {
 
 <template>
   <div class="cursor-pointer relative" @click="like">
-    <span v-for="icon in likes" class="heart">
-      <img class="w-16" :src="`/like/${icon}`" :alt="icon"/>
+    <span v-for="{icon, position} in likes"
+          class="icon"
+          :style="{left: `${position}px`}"
+    >
+     {{ icon }}
     </span>
     <slot></slot>
   </div>
@@ -57,33 +82,32 @@ app.$ws.channel('events').listen((data: WsEvent): void => {
   }
   24% {
     transform: rotateZ(20deg) scale(0.7);
-    left: 3px;
+    margin-left: 10px;
     opacity: 0.7
   }
   40% {
     transform: rotateZ(-11deg) scale(0.6);
-    left: -3px;
+    margin-right: 10px;
   }
   70% {
     transform: rotateZ(10deg) scale(0.4);
-    left: 3px;
+    margin-left: 10px;
     opacity: .5;
   }
   90% {
     transform: scale(0.2);
-    left: -3px;
+    margin-right: 10px;
   }
   100% {
     opacity: 0;
-    top: -200px;
+    top: -300px;
     transform: rotateZ(-5deg) scale(0.1);
   }
 }
 
-.heart {
-  position: absolute;
+.icon {
+  @apply absolute text-5xl;
   top: -60px;
-  left: 0;
   animation: float 1.5s linear forwards;
 }
 </style>

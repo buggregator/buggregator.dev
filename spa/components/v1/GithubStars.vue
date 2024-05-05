@@ -33,10 +33,10 @@ const currentProgress = computed(() => {
     <span v-else class="no-stars">Star it now!</span>
   </a>
 
-  <!--    <div v-if="progress" class="progress-bar">-->
-  <!--      <div class="progress" :style="{ width: `${currentProgress}%` }"></div>-->
-  <!--      <div class="required">of {{ props.required }} stars</div>-->
-  <!--    </div>-->
+  <div v-if="progress" class="progress-bar">
+    <div class="progress" :style="{ width: `${currentProgress}%` }"></div>
+    <div class="required">of {{ props.required }} stars</div>
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -55,7 +55,7 @@ const currentProgress = computed(() => {
   @apply bg-gray-800 text-white rounded-full flex items-center border bg-gray-800 hover:bg-blue-600 transition cursor-pointer;
 
   &.lg {
-    @apply gap-6 p-4 text-xl;
+    @apply gap-6 p-4 text-xl pr-5;
 
     .logo {
       @apply w-8 h-8;
@@ -67,7 +67,7 @@ const currentProgress = computed(() => {
   }
 
   &.md {
-    @apply gap-6 p-2;
+    @apply gap-6 py-2 pl-2 pr-3;
 
     .logo {
       @apply w-6 h-6;

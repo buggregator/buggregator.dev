@@ -13,14 +13,14 @@ import Feature from "~/components/v1/Features/Feature.vue";
     <div>
       <h3 class="feature-title">External database support</h3>
       <p class="feature-text mb-6">
-        Configure Buggregator to use external databases like MongoDB or
+        Configure Buggregator to use external databases like MySQL or
         PostgreSQL for event storage. This flexibility allows you to scale storage according to your
         project needs.
       </p>
 
       <a href="https://docs.buggregator.dev/config/external-db.html"
          target="_blank"
-         class="read-more-link green"
+         class="read-more-link"
       >
         Read more
       </a>

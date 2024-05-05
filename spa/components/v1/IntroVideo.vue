@@ -6,7 +6,7 @@ import { YoutubeVue3 as Youtube } from 'youtube-vue3'
   <div class="video-container">
     <Youtube videoid="yKWbuw8xN_c"
              class="w-full h-full"
-             controls="0"
+             controls="1"
              :autoplay="true"
              :loop="false"/>
   </div>
@@ -14,7 +14,7 @@ import { YoutubeVue3 as Youtube } from 'youtube-vue3'
 
 <style scoped lang="scss">
 .video-container {
-  @apply aspect-video w-3/4 rounded-xl overflow-hidden drop-shadow-2xl;
+  @apply aspect-video w-full md:w-3/4 md:rounded-xl overflow-hidden drop-shadow-2xl;
 
 }
 </style>

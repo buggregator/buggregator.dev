@@ -6,7 +6,7 @@ import GithubStars from "~/components/v1/GithubStars.vue";
   <div class="support">
     <div class="text">We need your support! <br> Please star the project on GitHub.</div>
 
-    <GithubStars repository="server" size="lg" />
+    <GithubStars repository="server" size="lg"/>
   </div>
 </template>
 

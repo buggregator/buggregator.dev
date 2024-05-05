@@ -13,12 +13,13 @@ import Feature from "~/components/v1/Features/Feature.vue";
       <div>
         <h3 class="feature-title">Single Sign On</h3>
         <p class="feature-text">Securely manage user access and authentication through Single
-          Sign-On (SSO) with providers like <a href="https://auth0.com/" class="text-link">Auth0</a>.
+          Sign-On (SSO) with providers like <a href="https://auth0.com" class="text-link">Auth0</a> or <a
+            href="https://kinde.com" class="text-link">Kinde</a>.
         </p>
       </div>
     </div>
     <div>
-      <a href="https://docs.buggregator.dev/config/sso.html" target="_blank" class="read-more-link purple">
+      <a href="https://docs.buggregator.dev/config/sso.html" target="_blank" class="read-more-link">
         Read more
       </a>
     </div>
