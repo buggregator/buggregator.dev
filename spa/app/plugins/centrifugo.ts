@@ -12,15 +12,16 @@ const guessWsConnection = (): string => {
 export default defineNuxtPlugin(async (nuxtApp) => {
     const config = useRuntimeConfig()
     const ws_url: string = (config.public.ws_url) || guessWsConnection()
+    const store = useAppStore();
 
     const client: WsClient = new WsClient(
         new Centrifuge(ws_url),
         nuxtApp.$logger
     )
 
-    await client.connect()
+    await store.init(client)
 
-    nuxtApp.hook('app:created', () => {
+    nuxtApp.hook('app:created', (): void => {
         const settings = useAppStore()
         settings.fetch()
 
