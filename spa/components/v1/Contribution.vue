@@ -2,6 +2,8 @@
 import { useIssuesStore } from "~/stores/issues";
 import GridRow from "~/components/v1/GridRow.vue";
 
+const { gtag } = useGtag()
+
 const store = useIssuesStore();
 store.fetch();
 
@@ -10,6 +12,10 @@ const issues = computed(() => {
 });
 
 const redirectTo = (url: string) => {
+  gtag('event', 'open_issue', {
+    label: 'open_issue',
+    url,
+  });
   window.open(url, "_blank");
 };
 </script>

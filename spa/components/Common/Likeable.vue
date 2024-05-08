@@ -2,6 +2,8 @@
 import type { WsEvent } from "~/config/types";
 import JSConfetti from "js-confetti";
 
+const { gtag } = useGtag()
+
 type Props = {
   name: string;
 };
@@ -33,6 +35,11 @@ const likes = ref([]);
 const app = useNuxtApp();
 const like = () => {
   app.$api.data.like(props.name);
+
+  gtag('event', 'like', {
+    label: 'like',
+    name: props.name,
+  });
 };
 
 const firework = (total: number = 40): void => {

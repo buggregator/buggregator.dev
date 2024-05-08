@@ -2,6 +2,21 @@
 import GridRow from "~/components/v1/GridRow.vue";
 import CopyCommand from "~/components/v1/CopyCommand.vue";
 
+const { gtag } = useGtag()
+
+const copyToClipboard = () => {
+  gtag('event', 'copy_command', {
+    label: 'copy_command',
+    component: 'how_to_run',
+  });
+};
+
+const openDocs = () => {
+  gtag('event', 'open_docs', {
+    label: 'open_docs',
+    component: 'how_to_run',
+  });
+};
 </script>
 
 <template>
@@ -18,10 +33,13 @@ import CopyCommand from "~/components/v1/CopyCommand.vue";
 
       <div class="mb-10 flex">
         <CopyCommand
-          text="docker run -p 8000:8000 -p 1025:1025 -p 9912:9912 -p 9913:9913 ghcr.io/buggregator/server:latest"/>
+          text="docker run -p 8000:8000 -p 1025:1025 -p 9912:9912 -p 9913:9913 ghcr.io/buggregator/server:latest"
+          @click="copyToClipboard"
+        />
       </div>
 
-      <a href="https://docs.buggregator.dev/getting-started.html" target="_blank" class="read-more-link gray">
+      <a href="https://docs.buggregator.dev/getting-started.html" target="_blank" class="read-more-link gray"
+         @clic="openDocs">
         Read more
       </a>
     </GridRow>

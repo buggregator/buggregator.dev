@@ -9,7 +9,7 @@
     background-color="#111827"
     color="#ffffff"
     transition-type="fade-down"
-    :loading-speed="20"
+    :loading-speed="10"
     :transition-speed="500"
   />
 </template>

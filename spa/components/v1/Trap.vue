@@ -2,6 +2,15 @@
 import GridRow from "~/components/v1/GridRow.vue";
 import CopyCommand from "~/components/v1/CopyCommand.vue";
 import GithubStars from "~/components/v1/GithubStars.vue";
+
+const { gtag } = useGtag()
+
+const onOpenRepo = () => {
+  gtag('event', 'open_repo', {
+    label: 'open_repo',
+    component: 'trap',
+  });
+};
 </script>
 
 <template>
@@ -21,7 +30,8 @@ import GithubStars from "~/components/v1/GithubStars.vue";
       </div>
 
       <div class="flex gap-6">
-        <a href="https://docs.buggregator.dev/trap/what-is-trap.html" target="_blank" class="read-more-link blue">
+        <a href="https://docs.buggregator.dev/trap/what-is-trap.html" target="_blank" class="read-more-link blue"
+           @click="onOpenRepo">
           Read more
         </a>
         <GithubStars repository="trap"/>

@@ -15,13 +15,18 @@
 
     <div class="buttons">
       <button @click="openVideo" class="video">
-        <svg viewBox="0 0 28.57 20" class="w-12" xmlns="http://www.w3.org/2000/svg"><path d="M27.97 3.12A3.58 3.58 0 0 0 25.45.6C23.22 0 14.29 0 14.29 0S5.35 0 3.12.6A3.58 3.58 0 0 0 .6 3.12C0 5.35 0 10 0 10s0 4.65.6 6.88a3.58 3.58 0 0 0 2.52 2.52c2.23.6 11.17.6 11.17.6s8.93 0 11.16-.6a3.58 3.58 0 0 0 2.52-2.52c.6-2.23.6-6.88.6-6.88s0-4.65-.6-6.88Z" fill="red"/><path d="M11.43 14.29 18.85 10l-7.42-4.28v8.57Z" fill="#fff"/></svg>
+        <svg viewBox="0 0 28.57 20" class="w-12" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M27.97 3.12A3.58 3.58 0 0 0 25.45.6C23.22 0 14.29 0 14.29 0S5.35 0 3.12.6A3.58 3.58 0 0 0 .6 3.12C0 5.35 0 10 0 10s0 4.65.6 6.88a3.58 3.58 0 0 0 2.52 2.52c2.23.6 11.17.6 11.17.6s8.93 0 11.16-.6a3.58 3.58 0 0 0 2.52-2.52c.6-2.23.6-6.88.6-6.88s0-4.65-.6-6.88Z"
+            fill="red"/>
+          <path d="M11.43 14.29 18.85 10l-7.42-4.28v8.57Z" fill="#fff"/>
+        </svg>
         <span>Watch video</span>
       </button>
-      <NuxtLink href="#demo" class="demo">
+      <NuxtLink href="#demo" class="demo" @click="tryDemo">
         Try demo
       </NuxtLink>
-      <NuxtLink href="#install" class="install">
+      <NuxtLink href="#install" class="install" @click="install">
         Let's install
       </NuxtLink>
     </div>
@@ -31,13 +36,32 @@
 <script setup lang="ts">
 import GridRow from "~/components/v1/GridRow.vue";
 import GithubStars from "~/components/v1/GithubStars.vue";
-import {openModal} from "jenesius-vue-modal";
+import { openModal } from "jenesius-vue-modal";
 import IntroVideo from "~/components/v1/IntroVideo.vue";
 
-const openVideo = async () => {
-  await openModal(IntroVideo, {
+const { gtag } = useGtag()
 
-  })
+const openVideo = async () => {
+  gtag('event', 'open_intro_video', {
+    label: 'open_intro_video',
+    component: 'hero',
+  });
+
+  await openModal(IntroVideo, {})
+};
+
+const install = () => {
+  gtag('event', 'install', {
+    label: 'install',
+    component: 'hero',
+  });
+};
+
+const tryDemo = () => {
+  gtag('event', 'try_demo', {
+    label: 'try_demo',
+    component: 'hero',
+  });
 };
 </script>
 

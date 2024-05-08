@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { useAppStore } from "~/stores/app";
 
+const { gtag } = useGtag()
+
 type Props = {
-  repository: number;
+  repository: string;
   size: Enum<'sm' | 'md' | 'lg'>;
   progress: boolean;
   required: number;
@@ -16,16 +18,30 @@ const props = withDefaults(defineProps<Props>(), {
 
 const stars = computed(() => {
   const app = useAppStore();
-  return app.github[props.repository].stars;
+  return app?.github[props.repository]?.stars || 0;
 });
 
 const currentProgress = computed(() => {
   return (stars.value / props.required) * 100;
 });
+
+const onOnOpenLink = () => {
+  gtag('event', 'open_github_stars', {
+    category: 'engagement',
+    label: 'github_stars',
+    size: props.size,
+    repository: props.repository,
+  });
+};
 </script>
 
 <template>
-  <a class="stars-container" :class="size" :href="`https://github.com/buggregator/${repository}`" target="_blank">
+  <a class="stars-container"
+     :class="size"
+     :href="`https://github.com/buggregator/${repository}`"
+     target="_blank"
+     @click="onOnOpenLink"
+  >
     <div class="text">
       <img class="logo" src="~/assets/img/github.svg" alt="GitHub Logo"/> GitHub
     </div>
