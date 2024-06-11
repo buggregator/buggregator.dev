@@ -8,11 +8,27 @@ export const useAppStore = defineStore('appStore', {
         github: {
             server: {
                 stars: 0,
-                last_version: ''
+                latest_release: {
+                    repository: 'buggregator/server',
+                    version: '0.0.0',
+                    createdAt: '2024-01-01T00:00:00+00:00'
+                }
             },
             trap: {
                 stars: 0,
-                last_version: ''
+                latest_release: {
+                    repository: 'buggregator/trap',
+                    version: '0.0.0',
+                    createdAt: '2024-01-01T00:00:00+00:00'
+                }
+            },
+            'phpstorm-plugin': {
+                stars: 0,
+                latest_release: {
+                    repository: 'buggregator/phpstorm-plugin',
+                    version: '0.0.0',
+                    createdAt: '2024-01-01T00:00:00+00:00'
+                }
             }
         },
         buggregator_url: ''

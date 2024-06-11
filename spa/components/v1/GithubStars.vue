@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from "~/stores/app";
+import { GithubRepo } from "~/app/entity/GithubRepo";
 
 const { gtag } = useGtag()
 
@@ -21,6 +22,15 @@ const stars = computed(() => {
   return app?.github[props.repository]?.stars || 0;
 });
 
+const repo = computed(() => {
+  const app = useAppStore();
+  return new GithubRepo(
+    props.repository,
+    app?.github[props.repository]?.stars || 0,
+    app?.github[props.repository]?.latest_release
+  );
+});
+
 const currentProgress = computed(() => {
   return (stars.value / props.required) * 100;
 });
@@ -38,14 +48,14 @@ const onOnOpenLink = () => {
 <template>
   <a class="stars-container"
      :class="size"
-     :href="`https://github.com/buggregator/${repository}`"
+     :href="repo.url"
      target="_blank"
      @click="onOnOpenLink"
   >
     <div class="text">
       <img class="logo" src="~/assets/img/github.svg" alt="GitHub Logo"/> GitHub
     </div>
-    <span v-if="stars > 0" class="stars">★ {{ stars }}</span>
+    <span v-if="repo.stars > 0" class="stars">★ {{ repo.stars }}</span>
     <span v-else class="no-stars">Star it now!</span>
   </a>
 

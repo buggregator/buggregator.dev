@@ -30,6 +30,13 @@
         Let's install
       </NuxtLink>
     </div>
+
+    <a v-if="repo.isNew" :href="`https://github.com/buggregator/server/releases/tag/${repo.version}`"
+       target="_blank"
+       class="text-base font-semibold align-super bg-orange-400 text-black rounded-md px-4 py-1 tracking-wide"
+    >
+      New release v{{ repo.version }} is out!
+    </a>
   </GridRow>
 </template>
 
@@ -38,8 +45,19 @@ import GridRow from "~/components/v1/GridRow.vue";
 import GithubStars from "~/components/v1/GithubStars.vue";
 import { openModal } from "jenesius-vue-modal";
 import IntroVideo from "~/components/v1/IntroVideo.vue";
+import { useAppStore } from "~/stores/app";
+import { GithubRepo } from "~/app/entity/GithubRepo";
 
 const { gtag } = useGtag()
+
+const repo = computed(() => {
+  const app = useAppStore();
+  return new GithubRepo(
+    'server',
+    app?.github['server']?.stars || 0,
+    app?.github['server']?.latest_release
+  );
+});
 
 const openVideo = async () => {
   gtag('event', 'open_intro_video', {
@@ -91,7 +109,7 @@ const tryDemo = () => {
 
   .video {
     @apply flex items-center gap-x-4;
-    @apply pl-4 pr-6 py-3;
+    @apply pl-4 pr-6 py-2;
     @apply bg-gray-800 hover:bg-gray-700;
     @apply rounded-md shadow-sm;
     @apply focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white;

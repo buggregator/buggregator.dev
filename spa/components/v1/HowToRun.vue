@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import GridRow from "~/components/v1/GridRow.vue";
 import CopyCommand from "~/components/v1/CopyCommand.vue";
+import { useAppStore } from "~/stores/app";
+import { GithubRepo } from "~/app/entity/GithubRepo";
 
 const { gtag } = useGtag()
 
@@ -17,6 +19,15 @@ const openDocs = () => {
     component: 'how_to_run',
   });
 };
+
+const serverRepo = computed(() => {
+  const app = useAppStore();
+  return new GithubRepo(
+    'server',
+    app?.github['server']?.stars || 0,
+    app?.github['server']?.latest_release
+  );
+});
 </script>
 
 <template>
@@ -31,17 +42,26 @@ const openDocs = () => {
         this command in your terminal:
       </p>
 
-      <div class="mb-10 flex">
+      <div class="flex">
         <CopyCommand
           text="docker run -p 8000:8000 -p 1025:1025 -p 9912:9912 -p 9913:9913 ghcr.io/buggregator/server:latest"
           @click="copyToClipboard"
         />
       </div>
 
-      <a href="https://docs.buggregator.dev/getting-started.html" target="_blank" class="read-more-link gray"
-         @clic="openDocs">
-        Read more
-      </a>
+      <div class="flex gap-6">
+        <a href="https://docs.buggregator.dev/getting-started.html" target="_blank" class="read-more-link gray"
+           @clic="openDocs">
+          Read more
+        </a>
+
+        <a v-if="serverRepo.isNew" :href="`${serverRepo.url}/releases/tag/${serverRepo.version}`"
+           target="_blank"
+           class="text-base font-semibold align-super bg-orange-400 text-black rounded-full px-4 py-1 tracking-wide flex items-center"
+        >
+          New release v{{ serverRepo.version }} is out!
+        </a>
+      </div>
     </GridRow>
   </div>
 </template>
@@ -52,6 +72,10 @@ const openDocs = () => {
 
   .section-title {
     @apply text-yellow-200;
+  }
+
+  .section-subtitle {
+    @apply text-yellow-200 text-4xl mb-12;
   }
 
   .section-body {

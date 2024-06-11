@@ -7,7 +7,7 @@ import Likeable from "~/components/Common/Likeable.vue";
   <div class="pt-16 pb-10 text-center select-none">
     <GridRow>
       <p class="text-lg mb-6 font-medium text-gray-500">
-        It can be used with your favorite PHP Framework or CMS
+        It can be used with any your favorite PHP Framework or CMS. Here are some of the most popular ones.
       </p>
 
       <div class="flex flex-wrap items-center justify-center gap-10">

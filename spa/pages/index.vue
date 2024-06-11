@@ -7,10 +7,10 @@
     <Support/>
     <div class="flex flex-col gap-20">
       <HowToRun/>
+      <Trap class="-mt-20"/>
       <Features/>
-      <Trap/>
-      <Team/>
       <Contribution/>
+      <Team class="mb-20"/>
     </div>
     <PhpStorm/>
   </div>

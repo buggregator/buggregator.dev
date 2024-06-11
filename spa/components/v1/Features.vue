@@ -7,6 +7,7 @@ import KubernetesReady from "~/components/v1/Features/KubernetesReady.vue";
 import SourceCode from "~/components/v1/Features/SourceCode.vue";
 import Webhooks from "~/components/v1/Features/Webhooks.vue";
 import Metrics from "~/components/v1/Features/Metrics.vue";
+import Profiler from "~/components/v1/Features/Profiler.vue";
 </script>
 
 <template>
@@ -21,6 +22,7 @@ import Metrics from "~/components/v1/Features/Metrics.vue";
         <SSO class="md:w-1/2 bg-white"/>
         <ExternalDatabases class="md:w-1/2 bg-white"/>
       </div>
+      <Profiler/>
       <div class="flex flex-col md:flex-row gap-6">
         <Webhooks class="md:w-1/2 bg-white"/>
         <Metrics class="md:w-1/2 bg-white"/>

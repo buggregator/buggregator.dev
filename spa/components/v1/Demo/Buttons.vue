@@ -90,8 +90,8 @@ const buttons = [
       {
         group: 'common',
         actions: [
-          'OrderShipped',
           'WelcomeMail',
+          'OrderShipped',
         ]
       }
     ],
@@ -110,6 +110,7 @@ const buttons = [
           'Bool',
           'Int',
           'Object',
+          'Code',
           'Exception',
         ]
       }
@@ -159,7 +160,7 @@ const callAction = (section: string, group: string, action: string) => {
       <p v-if="section.description" class="description">{{ section.description }}</p>
 
       <div class="docs">
-        <a href="{{ section.docs }}" target="_blank" class="read-more-link blue small">Docs</a>
+        <a :href="section.docs" target="_blank" class="read-more-link blue small">Docs</a>
       </div>
 
       <div v-for="event in section.events" :key="`${section.key}-${event.group}`" class="events">
