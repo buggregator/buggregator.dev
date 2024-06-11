@@ -33,6 +33,12 @@ final readonly class TeamAction
                 'avatar' => 'https://avatars.githubusercontent.com/u/13301570?v=4',
                 'github' => 'https://github.com/Kreezag',
             ],
+            [
+                'name' => 'Artūrs Terehovičs',
+                'role' => 'PHP developer',
+                'avatar' => 'https://avatars.githubusercontent.com/u/94047334?v=4',
+                'github' => 'https://github.com/lotyp',
+            ],
         ], TeamResource::class);
-    }
+}
 }

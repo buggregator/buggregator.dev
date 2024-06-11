@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Github;
 
+use App\Github\Entity\Release;
 use Psr\SimpleCache\CacheInterface;
 
 final readonly class CacheableClient implements ClientInterface
@@ -12,8 +13,7 @@ final readonly class CacheableClient implements ClientInterface
         private ClientInterface $client,
         private CacheInterface $cache,
         private int $ttl = 300,
-    ) {
-    }
+    ) {}
 
     public function getStars(string $repository): int
     {
@@ -29,18 +29,18 @@ final readonly class CacheableClient implements ClientInterface
         return $stars;
     }
 
-    public function getLastVersion(string $repository): string
+    public function getLatestRelease(string $repository): Release
     {
         $cacheKey = $this->getCacheKey($repository, __METHOD__);
         if ($this->cache->has($cacheKey)) {
             return $this->cache->get($cacheKey);
         }
 
-        $version = $this->client->getLastVersion($repository);
+        $release = $this->client->getLatestRelease($repository);
 
-        $this->cache->set($cacheKey, $version, $this->ttl);
+        $this->cache->set($cacheKey, $release, $this->ttl);
 
-        return $version;
+        return $release;
     }
 
     public function getIssuesForContributors(): array

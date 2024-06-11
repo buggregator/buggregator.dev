@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Github;
 
 use App\Github\Entity\Issue;
+use App\Github\Entity\Release;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request;
 use Psr\Log\LoggerInterface;
@@ -14,8 +15,7 @@ final readonly class Client implements ClientInterface
     public function __construct(
         private \Psr\Http\Client\ClientInterface $client,
         private LoggerInterface $logger,
-    ) {
-    }
+    ) {}
 
     public function getStars(string $repository): int
     {
@@ -31,7 +31,7 @@ final readonly class Client implements ClientInterface
         return $data['stargazers_count'] ?? 0;
     }
 
-    public function getLastVersion(string $repository): string
+    public function getLatestRelease(string $repository): Release
     {
         $response = $this->client->sendRequest(
             new Request(
@@ -42,7 +42,11 @@ final readonly class Client implements ClientInterface
 
         $data = \json_decode($response->getBody()->getContents(), true);
 
-        return $data['tag_name'] ?? '0.0.0';
+        return new Release(
+            repository: $repository,
+            version: $data['tag_name'],
+            createdAt: Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $data['created_at']),
+        );
     }
 
     public function getIssuesForContributors(): array

@@ -18,15 +18,15 @@ final readonly class SettingsAction
             'github' => [
                 'server' => [
                     'stars' => $client->getStars('buggregator/server'),
-                    'last_version' => $client->getLastVersion('buggregator/server'),
+                    'latest_release' => $client->getLatestRelease('buggregator/server'),
                 ],
                 'trap' => [
                     'stars' => $client->getStars('buggregator/trap'),
-                    'last_version' => $client->getLastVersion('buggregator/trap'),
+                    'latest_release' => $client->getLatestRelease('buggregator/trap'),
                 ],
                 'phpstorm-plugin' => [
                     'stars' => $client->getStars('buggregator/phpstorm-plugin'),
-                    'last_version' => $client->getLastVersion('buggregator/phpstorm-plugin'),
+                    'latest_release' => $client->getLatestRelease('buggregator/phpstorm-plugin'),
                 ],
             ],
         ]);
