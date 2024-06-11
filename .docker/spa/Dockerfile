@@ -4,7 +4,7 @@ FROM alpine/git as git
 ARG REPOSITORY=https://github.com/buggregator/buggregator.dev
 RUN git clone $REPOSITORY /app
 
-FROM node:21-alpine
+FROM node:22-alpine
 
 ARG APP_VERSION=1.0.0
 ENV APP_VERSION=$APP_VERSION
