@@ -118,6 +118,24 @@ const buttons = [
     docs: 'https://docs.buggregator.dev/config/var-dumper.html',
   },
   {
+    key: "http",
+    title: 'HTTP dump server.',
+    description: 'Inspect HTTP requests and responses in real-time, ensuring that your application is sending the correct data.',
+    events: [
+      {
+        group: 'common',
+        actions: [
+          'Get',
+          'Post',
+          'Put',
+          'Patch',
+          'Delete',
+        ]
+      }
+    ],
+    docs: 'https://docs.buggregator.dev/config/http-dumps.html',
+  },
+  {
     key: "inspector",
     title: 'inspector.dev Integration',
     description: 'A handy feature for local development, ensuring swift issue identification and resolution.',
