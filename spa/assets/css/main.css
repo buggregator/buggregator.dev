@@ -51,7 +51,7 @@ a.text-link {
 }
 
 .feature {
-    @apply border p-8 rounded-lg justify-between hover:shadow-xl transition;
+    @apply border p-8 rounded-lg justify-between hover:shadow-xl transition bg-cover;
 }
 
 .feature-grid {
