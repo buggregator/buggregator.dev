@@ -23,7 +23,7 @@ final readonly class TeamAction
             ],
             [
                 'name' => 'Aleksei Gagarin',
-                'role' => 'PHP developer',
+                'role' => 'Creator of Trap',
                 'avatar' => 'https://avatars.githubusercontent.com/u/4152481?v=4',
                 'github' => 'https://github.com/roxblnfk',
             ],
