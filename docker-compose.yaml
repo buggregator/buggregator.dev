@@ -47,6 +47,7 @@ services:
       NUXT_PUBLIC_WS_URL: ${NUXT_PUBLIC_WS_URL:-ws://buggregator.localhost/connection/websocket}
       NUXT_PUBLIC_EXAMPLES_URL: ${NUXT_PUBLIC_EXAMPLES_URL:-http://buggregator.localhost}
       NUXT_PUBLIC_BUGGREGATOR_URL: ${NUXT_PUBLIC_BUGGREGATOR_URL:-http://demo.buggregator.localhost}
+      NUXT_PUBLIC_GTAG_ID: ${NUXT_PUBLIC_GTAG_ID:-null}
     ports:
       - ${BUGGREGATOR_SPA_PORT_HTTP:-8012}:3000
     networks:
