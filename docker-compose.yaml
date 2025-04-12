@@ -29,7 +29,7 @@ services:
     restart: always
     image: ghcr.io/buggregator/buggregator.dev-app:latest
     environment:
-      #      TOKENIZER_CACHE_TARGETS: true
+      TOKENIZER_CACHE_TARGETS: ${TOKENIZER_CACHE_TARGETS:-true}
       APP_ENV: production
       DEBUG: false
       VERBOSITY_LEVEL: basic
@@ -53,6 +53,7 @@ services:
       VAR_DUMPER_FORMAT: server
       VAR_DUMPER_SERVER: buggregator-demo:9912
 
+      GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
     volumes:
       - ./app:/app
