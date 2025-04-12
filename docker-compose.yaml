@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   buggregator-reverse-proxy:
+    restart: always
     image: traefik:v2.9
     command:
       - "--accesslog"
@@ -13,7 +14,7 @@ services:
       - "--providers.file.directory=/configuration/"
       - "--providers.file.watch=true"
     ports:
-      - ${TRAEFIC_PORT_HTTP:-80}:80
+      - ${TRAEFIC_PORT_HTTP:-8010}:80
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.buggregator-reverse-proxy.entrypoints=web"
@@ -25,6 +26,7 @@ services:
       - buggregator-network
 
   buggregator-api:
+    restart: always
     image: ghcr.io/buggregator/buggregator.dev-app:latest
     environment:
       #      TOKENIZER_CACHE_TARGETS: true
@@ -80,6 +82,7 @@ services:
       - buggregator-network
 
   buggregator-examples:
+    restart: always
     image: ghcr.io/buggregator/examples:latest
     environment:
       APP_ENV: production
@@ -115,6 +118,7 @@ services:
       - buggregator-network
 
   buggregator-demo:
+    restart: always
     image: ghcr.io/buggregator/server:latest
     labels:
       - "traefik.enable=true"
@@ -125,6 +129,7 @@ services:
       - buggregator-network
 
   buggregator-docs:
+    restart: always
     image: ghcr.io/buggregator/docs:latest
     labels:
       - "traefik.enable=true"
@@ -134,34 +139,8 @@ services:
     networks:
       - buggregator-network
 
-  buggregator-n8n:
-    image: docker.n8n.io/n8nio/n8n
-    environment:
-      N8N_HOST: ${N8N_HOST:-wf.buggregator.localhost}
-      NODE_ENV: production
-      WEBHOOK_URL: ${N8N_WEBHOOK_URL:-http://wf.buggregator.localhost}
-      GENERIC_TIMEZONE: ${N8N_GENERIC_TIMEZONE:-UTC}
-
-      DB_TYPE: postgresdb
-      DB_POSTGRESDB_DATABASE: n8n
-      DB_POSTGRESDB_HOST: buggregator-pgsql
-      DB_POSTGRESDB_PORT: 5432
-      DB_POSTGRESDB_USER: homestead
-      DB_POSTGRESDB_PASSWORD: secret
-      DB_POSTGRESDB_SCHEMA: public
-    volumes:
-      - ./.docker-data/n8n:/home/node/.n8n
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-wf-http.entrypoints=web"
-      - "traefik.http.routers.buggregator-wf-http.rule=Host(`wf.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-wf-http.loadbalancer.server.port=5678"
-    depends_on:
-      - buggregator-pgsql
-    networks:
-      - buggregator-network
-
   buggregator-pgsql:
+    restart: always
     image: postgres:15
     healthcheck:
       test: pg_isready -d $$POSTGRES_DB -U $$POSTGRES_USER
@@ -178,19 +157,6 @@ services:
       POSTGRES_USER: homestead
       POSTGRES_PASSWORD: secret
       POSTGRES_DB: homestead
-    networks:
-      - buggregator-network
-
-  buggregator-nginx:
-    image: nginx
-    restart: always
-    volumes:
-      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-http.entrypoints=web"
-      - "traefik.http.routers.buggregator-http.rule=Host(`buggregator.localhost`)"
-      - "traefik.http.services.buggregator-http.loadbalancer.server.port=80"
     networks:
       - buggregator-network
 
