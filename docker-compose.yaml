@@ -1,30 +1,6 @@
 version: '3.9'
 
 services:
-  buggregator-reverse-proxy:
-    restart: always
-    image: traefik:v2.9
-    command:
-      - "--accesslog"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--providers.file.directory=/configuration/"
-      - "--providers.file.watch=true"
-    ports:
-      - ${TRAEFIC_PORT_HTTP:-8010}:80
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-reverse-proxy.entrypoints=web"
-      - "traefik.http.routers.buggregator-reverse-proxy.rule=Host(`traefik.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-reverse-proxy.loadbalancer.server.port=8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    networks:
-      - buggregator-network
-
   buggregator-api:
     restart: always
     image: ghcr.io/buggregator/buggregator.dev-app:latest
@@ -55,11 +31,8 @@ services:
 
       GITHUB_WEBHOOK_SECRET: ${GITHUB_WEBHOOK_SECRET}
       GITHUB_TOKEN: ${GITHUB_TOKEN}
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-api.entrypoints=web"
-      - "traefik.http.routers.buggregator-api.rule=Host(`api.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-api.loadbalancer.server.port=8000"
+    ports:
+      - ${BUGGREGATOR_API_PORT_HTTP:-8011}:8000
     volumes:
       - ./app:/app
     depends_on:
@@ -74,11 +47,8 @@ services:
       NUXT_PUBLIC_WS_URL: ws://buggregator.localhost/connection/websocket
       NUXT_PUBLIC_EXAMPLES_URL: http://buggregator.localhost
       NUXT_PUBLIC_BUGGREGATOR_URL: http://demo.buggregator.localhost
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-spa.entrypoints=web"
-      - "traefik.http.routers.buggregator-spa.rule=Host(`spa.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-spa.loadbalancer.server.port=3000"
+    ports:
+      - ${BUGGREGATOR_SPA_PORT_HTTP:-8012}:3000
     networks:
       - buggregator-network
 
@@ -87,11 +57,8 @@ services:
     volumes:
       - ./.docker/centrifugo/config.json:/centrifugo/config.json
     command: centrifugo -c config.json
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-ws.entrypoints=web"
-      - "traefik.http.routers.buggregator-ws.rule=Host(`ws.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-ws.loadbalancer.server.port=8089"
+    ports:
+      - ${BUGGREGATOR_WS_PORT_HTTP:-8013}:8089
     depends_on:
       - buggregator-api
     networks:
@@ -128,11 +95,8 @@ services:
       INSPECTOR_API_KEY: test
       BUGGREGATOR_URL: ${BUGGREGATOR_DEMO_URL:-http://demo.buggregator.localhost}
       PROFILER_ENDPOINT: http://profiler@buggregator-demo:8000
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-examples.entrypoints=web"
-      - "traefik.http.routers.buggregator-examples.rule=Host(`examples.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-examples.loadbalancer.server.port=8000"
+    ports:
+      - ${BUGGREGATOR_EXAMPLES_PORT_HTTP:-8014}:8000
     depends_on:
       - buggregator-pgsql
     networks:
@@ -141,22 +105,16 @@ services:
   buggregator-demo:
     restart: always
     image: ghcr.io/buggregator/server:latest
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-demo-http.entrypoints=web"
-      - "traefik.http.routers.buggregator-demo-http.rule=Host(`demo.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-demo-http.loadbalancer.server.port=8000"
+    ports:
+      - ${BUGGREGATOR_DEMO_PORT_HTTP:-8015}:8000
     networks:
       - buggregator-network
 
   buggregator-docs:
     restart: always
     image: ghcr.io/buggregator/docs:latest
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.buggregator-docs-http.entrypoints=web"
-      - "traefik.http.routers.buggregator-docs-http.rule=Host(`docs.buggregator.localhost`)"
-      - "traefik.http.services.buggregator-docs-http.loadbalancer.server.port=80"
+    ports:
+      - ${BUGGREGATOR_DOCS_PORT_HTTP:-8016}:80
     networks:
       - buggregator-network
 
