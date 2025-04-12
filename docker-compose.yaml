@@ -148,7 +148,6 @@ services:
       interval: 2s
       timeout: 5s
       start_period: 2s
-    restart: always
     volumes:
       - type: bind
         source: ./.docker-data/db
