@@ -33,8 +33,6 @@ services:
       GITHUB_TOKEN: ${GITHUB_TOKEN}
     ports:
       - ${BUGGREGATOR_API_PORT_HTTP:-8011}:8000
-    volumes:
-      - ./app:/app
     depends_on:
       - buggregator-pgsql
     networks:
