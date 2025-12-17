@@ -17,7 +17,7 @@ final readonly class TeamAction
         return new TeamCollection([
             [
                 'name' => 'Pavel Buchnev',
-                'role' => 'Creator of Buggregator',
+                'role' => 'Founder and Core Developer',
                 'avatar' => 'https://avatars.githubusercontent.com/u/773481?v=4',
                 'github' => 'https://github.com/butschster',
             ],
@@ -29,16 +29,16 @@ final readonly class TeamAction
             ],
             [
                 'name' => 'Andrey Kuchuk',
-                'role' => 'Frontend developer',
+                'role' => 'Frontend Developer (UI & UX)',
                 'avatar' => 'https://avatars.githubusercontent.com/u/13301570?v=4',
                 'github' => 'https://github.com/Kreezag',
             ],
             [
-                'name' => 'Artūrs Terehovičs',
-                'role' => 'PHP developer',
-                'avatar' => 'https://avatars.githubusercontent.com/u/94047334?v=4',
-                'github' => 'https://github.com/lotyp',
+                'name' => 'Dmitrii Derepko',
+                'role' => 'IDE Plugin Developer',
+                'avatar' => 'https://avatars.githubusercontent.com/u/6815714?&v=4',
+                'github' => 'https://github.com/xepozz',
             ],
         ], TeamResource::class);
-}
+    }
 }
